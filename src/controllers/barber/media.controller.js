@@ -1,23 +1,20 @@
-const addPhotos = async(req,res,next)=>{
+const addPhotos = async (req, res, next) => {
   // save imges to database
 };
 
-const addVideos = async(req,res,next)=>{
+const addVideos = async (req, res, next) => {
   // save videos to database
 };
 
-
-
-const deletePhotos = async(req,res,next)=>{
+const deletePhotos = async (req, res, next) => {
   // save imges to database
 };
 
-const deleteVideos = async(req,res,next)=>{
+const deleteVideos = async (req, res, next) => {
   // save videos to database
 };
 
-
-module.exports={
+module.exports = {
   addPhotos,
   addVideos,
   deletePhotos,
