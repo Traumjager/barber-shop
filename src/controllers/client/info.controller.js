@@ -1,4 +1,4 @@
-const getBarbers = async (req, res, next) => {
+const getClients = async (req, res, next) => {
   const id = req.params.id ? req.params.id : null;
 
   if (id) {
@@ -8,11 +8,11 @@ const getBarbers = async (req, res, next) => {
   }
 };
 
-const updateBarber = async (req, res, next) => {
+const updateClients = async (req, res, next) => {
   // when the barber wants to update his profile
 };
 
 module.exports = {
-  getBarbers,
-  updateBarber,
+  getClients,
+  updateClients,
 };

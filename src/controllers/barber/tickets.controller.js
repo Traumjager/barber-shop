@@ -2,8 +2,6 @@ const deleteTicket = (id) => {
   return `delete from reqdatabase where id=${id}`;
 };
 
-
-
 const getRequestTicket = async (req, res, next) => {
   // get all the tickets that in hold
 };
@@ -13,11 +11,8 @@ const addToQueue = async (req, res, next) => {
   // when the barber accept
   deleteTicket(req.body.id);
 };
-const addToQueueManule = async (req, res, next) => {
- 
-
-};
-const removeTheRuqest = async (req, res, next) => {
+const addToQueueManual = async (req, res, next) => {};
+const removeTheRequest = async (req, res, next) => {
   // after you accept or ignore use the delete function in line 2
 
   deleteTicket(req.body.id);
@@ -26,7 +21,6 @@ const removeTheRuqest = async (req, res, next) => {
 module.exports = {
   getRequestTicket,
   addToQueue,
-  removeTheRuqest,
-  addToQueueManule,
+  removeTheRequest,
+  addToQueueManual,
 };
-
