@@ -18,7 +18,7 @@ Router.delete('/media/videos', deletePhotos);
 Router.delete('/media/videos', deleteVideos);
 Router.post('/offers', createOffers);
 Router.delete('/offers', deleteOffers);
-Router.get('/services', getServices);
+// Router.get('/services', getServices);
 Router.post('/services', createServices);
 Router.put('/services', editServices);
 Router.delete('/services', deleteServices);
