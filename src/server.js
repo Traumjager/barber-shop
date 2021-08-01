@@ -22,6 +22,8 @@ app.use(intServerErr);
 app.use(`/`, authRoutes);
 app.use(`/client`, clientRouters);
 app.use('/barber', barberRoutes);
+app.use('/images',express.static(__dirname + '/images') );
+app.use('/videos', express.static(__dirname + '/videos'));
 
 module.exports = {
   app,
