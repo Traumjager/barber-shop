@@ -6,14 +6,19 @@ const { getServices, createServices, editServices, deleteServices, addServices }
 const { getRequestTicket, addToQueue, removeTheRequest, addToQueueManual } = require('../controllers/barber/tickets.controller');
 const { getProduct, createProduct, editProduct, deleteProduct } = require('../controllers/barber/products.controller');
 const getSubscribers = require('../controllers/barber/subs.controller');
-
+const {
+  uploadcuts,
+  uploadvideo,
+  uploadProfilepic,
+  uploadProduct,
+} = require('../middleware/multer');
 
 Router.get('/', getBarbers);
 Router.get('/subs', getSubscribers);
 Router.put('/', updateBarber);
-Router.post('/media/photos', addPhotos);
-Router.post('/media/photos', addVideos);
-Router.delete('/media/videos', deletePhotos);
+Router.post('/media/photos', uploadcuts.array('cuts', 5), addPhotos);
+Router.post('/media/videos', uploadvideo.array('videos', 5), addVideos);
+Router.delete('/media/photos', deletePhotos);
 Router.delete('/media/videos', deleteVideos);
 // Router.get('/services', getServices);
 Router.post('/services', createServices);
