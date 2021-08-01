@@ -29,7 +29,7 @@ CREATE TABLE client (
     gender varchar(255),
     age int,
     phone_num varchar(255),
-    profile_pic varchar(255),
+    profile_pic varchar(255)
 );
 
 DROP TABLE IF EXISTS services;

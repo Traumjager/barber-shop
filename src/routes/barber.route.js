@@ -6,8 +6,6 @@ const { getServices, createServices, editServices, deleteServices, addServices }
 const { getRequestTicket, addToQueue, removeTheRequest, addToQueueManual } = require('../controllers/barber/tickets.controller');
 const { getProduct, createProduct, editProduct, deleteProduct } = require('../controllers/barber/products.controller');
 const getSubscribers = require('../controllers/barber/subs.controller');
-
-
 Router.get('/', getBarbers);
 Router.get('/subs', getSubscribers);
 Router.put('/', updateBarber);
