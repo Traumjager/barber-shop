@@ -45,7 +45,7 @@ CREATE TABLE services (
     estimated_time varchar(255),
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-	  REFERENCES barber(barber_id)
+	  REFERENCES barber(id)
 );
 
 DROP TABLE IF EXISTS products;
@@ -61,7 +61,7 @@ CREATE TABLE products (
     product_image varchar(255),
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id) 
-	  REFERENCES barber(barber_id)
+	  REFERENCES barber(id)
 );
 
 DROP TABLE IF EXISTS media;
@@ -73,7 +73,7 @@ CREATE TABLE media (
     media_path varchar(255) NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id)
+      REFERENCES barber(id)
 );    
 
 DROP TABLE IF EXISTS subscriptions;
@@ -84,10 +84,10 @@ CREATE TABLE subscriptions (
     client_id int NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id)
+      REFERENCES client(id)
 );    
 
 DROP TABLE IF EXISTS tickets;
@@ -100,13 +100,13 @@ CREATE TABLE tickets (
     time int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id),
+      REFERENCES client(id),
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
-      REFERENCES services(service_id)
+      REFERENCES services(id)
 );  
 
 DROP TABLE IF EXISTS queue;
@@ -119,13 +119,13 @@ CREATE TABLE queue (
     time int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id),
+      REFERENCES client(id),
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
-      REFERENCES services(service_id)
+      REFERENCES services(id)
 );  
 
 DROP TABLE IF EXISTS reviews;
@@ -139,8 +139,8 @@ CREATE TABLE reviews (
     rate int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id)
+      REFERENCES client(id)
 ); 
