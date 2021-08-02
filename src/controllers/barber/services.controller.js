@@ -10,6 +10,7 @@ const createServices = async (req, res, next) => {
   console.log('req.body', req.body);
   try {
     const {
+      barberId,
       serviceName,
       serviceDescrp,
       servicePrice,
@@ -18,6 +19,7 @@ const createServices = async (req, res, next) => {
       endDate,
     } = req.body;
     let sreviceData = {
+      barberId,
       serviceName,
       serviceDescrp,
       servicePrice,

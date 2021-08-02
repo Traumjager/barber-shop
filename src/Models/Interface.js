@@ -12,17 +12,26 @@ class Interface {
   read(barberId, serviceID) {
     if (serviceID) {
       // return pool.query('SELECT * FROM $1 WHERE id=$2;', [this.table, id]);
-      return pool.query(`SELECT * FROM ${this.table} WHERE id=$1;`, [id]);
+      return pool.query(`SELECT * FROM ${this.table} WHERE id=$1;`, [
+        serviceID,
+      ]);
     }
     // return pool.query('SELECT * FROM $1;', [this.table]);
     return pool.query(`SELECT * FROM ${this.table};`);
   }
 
-  create(obj) {
+  create(sreviceData) {
     console.log('hellooo from create method');
     console.log('this.table', this.table);
     // const sql = 'INSERT INTO $1 (type,color) VALUES ($2,$3) RETURNING *;';
-    const sql = `INSERT INTO ${this.table} (type,color) VALUES ($1,$2) RETURNING *;`;
+    // barber_id int NOT NULL,
+    // service_name varchar(255) NOT NULL,
+    // description varchar(255),
+    // price int NOT NULL,
+    // discount int default 0,
+    // end_date date,
+    // estimated_time varchar(255),
+    const sql = `INSERT INTO ${this.table} (barber_id,service_name,description,price,discount,end_date) VALUES ($1,$2,,$3,,$4,$5,$6,$7) RETURNING *;`;
 
     // const safeValues = [this.table, obj.type, obj.color];
     const safeValues = [obj.type, obj.color];
