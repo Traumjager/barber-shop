@@ -11,7 +11,9 @@ const addToQueue = async (req, res, next) => {
   // when the barber accept
   deleteTicket(req.body.id);
 };
-const addToQueueManual = async (req, res, next) => {};
+const addToQueueManual = async (req, res, next) => {
+  
+};
 const removeTheRequest = async (req, res, next) => {
   // after you accept or ignore use the delete function in line 2
 
