@@ -1,3 +1,6 @@
+// note : this interface still needs some editings !
+// maybe will be for the service table or product table or both of them...will edit and push again
+
 'use strict';
 const pool = require('./pool');
 
@@ -28,12 +31,16 @@ class Interface {
     return pool.query(sql, safeValues);
   }
 
-  update(barberId, serviceId, obj) {
+  update(barberId, serviceId, sreviceDataUpdated) {
     // const sql = 'UPDATE $1 SET type=$2,color=$3 WHERE id=$4 RETURNING *;';
     const sql = `UPDATE ${this.table} SET type=$1,color=$2 WHERE id=$3 RETURNING *;`;
 
     // const safeValues = [this.table, obj.type, obj.color, id];
-    const safeValues = [obj.type, obj.color, serviceId];
+    const safeValues = [
+      sreviceDataUpdated.type,
+      sreviceDataUpdated.color,
+      serviceId,
+    ];
 
     return pool.query(sql, safeValues);
   }

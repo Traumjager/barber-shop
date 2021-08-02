@@ -1,6 +1,6 @@
 'use strict';
 const Interface = require('../../Models/Interface');
-const interfaceSql = new Interface('servicesTable');
+const interfaceSql = new Interface('services');
 const addServices = async (re, res, next) => {
   // add a service from services list to service board
 };
@@ -8,46 +8,74 @@ const addServices = async (re, res, next) => {
 const createServices = async (req, res, next) => {
   // create your services and prices
   console.log('req.body', req.body);
-  const { serviceName, serviceDescrp, servicePrice, estimatedTime } = req.body;
-  let sreviceData = {
-    serviceName,
-    serviceDescrp,
-    servicePrice,
-    estimatedTime,
-  };
-  let serviceResponse = interfaceSql.create(sreviceData);
-  res.send('all good');
+  try {
+    const {
+      serviceName,
+      serviceDescrp,
+      servicePrice,
+      estimatedTime,
+      discount,
+      endDate,
+    } = req.body;
+    let sreviceData = {
+      serviceName,
+      serviceDescrp,
+      servicePrice,
+      estimatedTime,
+      discount,
+      endDate,
+    };
+    let serviceResponse = await interfaceSql.create(sreviceData);
+    res.send(serviceResponse);
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 const editServices = async (req, res, next) => {
-  // update the server
-  const {
-    barberId,
-    seviceID,
-    serviceName,
-    serviceDescrp,
-    servicePrice,
-    estimatedTime,
-  } = req.body;
-  let sreviceDataUpdated = {
-    serviceName,
-    serviceDescrp,
-    servicePrice,
-    estimatedTime,
-  };
-  let serviceResponse = interfaceSql.update(
-    barberId,
-    seviceID,
-    sreviceDataUpdated
-  );
-  res.send('updat done');
+  // update the service
+  try {
+    const { seviceID } = req.params;
+
+    const {
+      barberId,
+      serviceName,
+      serviceDescrp,
+      servicePrice,
+      estimatedTime,
+      discount,
+      endDate,
+    } = req.body;
+    let sreviceDataUpdated = {
+      serviceName,
+      serviceDescrp,
+      servicePrice,
+      estimatedTime,
+      discount,
+      endDate,
+    };
+    let serviceResponse = await interfaceSql.update(
+      barberId,
+      seviceID,
+      sreviceDataUpdated
+    );
+    res.send(serviceResponse);
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 const deleteServices = async (req, res, next) => {
-  // update the server
-  const { barberId, seviceID } = req.body;
-  let serviceResponse = interfaceSql.delete(barberId, seviceID);
-  res.send('delete done');
+  // delete the service
+  try {
+    const { barberId } = req.body;
+    const { seviceID } = req.params;
+
+    let serviceResponse = await interfaceSql.delete(barberId, seviceID);
+    res.send(serviceResponse);
+  } catch (error) {
+    res.json(error);
+  }
 };
 module.exports = {
   createServices,
