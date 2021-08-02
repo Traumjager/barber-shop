@@ -1,6 +1,8 @@
 'use strict';
-const pool = require('../Models/pool');
 const jwt = require('jsonwebtoken');
+const Interface = require('../Models/auth-interface');
+const authB = new Interface('barber');
+const authC = new Interface('client');
 require('dotenv').config();
 const secret = process.env.SECRET;
 
@@ -25,7 +27,7 @@ module.exports = async (req, res, next) => {
 async function authenticateWithToken(token) {
   try {
     const parsedToken = jwt.verify(token, secret);
-    const user = (await pool.query('SELECT * FROM barber WHERE email=$1', [parsedToken.email])).rows[0] || (await pool.query('SELECT * FROM client WHERE email=$1', [parsedToken.email])).rows[0];
+    const user = (await authB.read(parsedToken.email)).rows[0] || (await authC.read(parsedToken.email)).rows[0];
     if (user) {
       return user;
     }
