@@ -31,12 +31,15 @@ const {
   deleteProduct,
 } = require('../controllers/barber/products.controller');
 const getSubscribers = require('../controllers/barber/subs.controller');
+
+
 const {
   uploadcuts,
   uploadvideo,
   uploadProfilepic,
   uploadProduct,
 } = require('../middleware/multer');
+
 
 Router.get('/', getBarbers);
 Router.get('/subs', getSubscribers);

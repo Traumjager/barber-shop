@@ -12,9 +12,9 @@ const { addBarber, removeBarber } = require('../controllers/client/subs.controll
 // //
 Router.post('/tickets', createTicket);
 Router.delete('/tickets', deleteTicket);
-Router.get('/reviews', getReviews);
+Router.get('/reviews/:barberId', getReviews);
 Router.post('/reviews', postReview);
-Router.delete('/reviews', deleteReview);
+Router.delete('/reviews/:reviewId', deleteReview);
 Router.post('/services', bookService);
 Router.delete('/services', deleteService);
 Router.post('/subs', addBarber);
