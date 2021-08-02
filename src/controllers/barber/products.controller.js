@@ -1,20 +1,80 @@
+const Interface = require('../../Models/Interface');
+const interfaceSql = new Interface('products');
+
 const createProduct = async (req, res, next) => {
   // create a Product, description and price
+  try {
+    const { productName, productDescrp, productPrice, discount, endDate } =
+      req.body;
+    let productData = {
+      productName,
+      productDescrp,
+      productPrice,
+      discount,
+      endDate,
+    };
+    let productResponse = await interfaceSql.create(productData);
+    res.send(productResponse);
+  } catch (error) {
+    res.json(error);
+  }
 };
 const getProduct = async (req, res, next) => {
-
-  // we need the barber id 
-
+  // we need the barber id
   // get all products for the barbar
+  try {
+    const { barberID } = req.body;
+    const { productID } = req.params;
 
+    let productResponse = await interfaceSql.read(barberID, productID);
+    res.send(productResponse);
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 const editProduct = async (req, res, next) => {
   // update a product
+  try {
+    const { productID } = req.params;
+
+    const {
+      barberId,
+      productName,
+      productDescrp,
+      productPrice,
+      discount,
+      endDate,
+    } = req.body;
+    let productDataUpdated = {
+      productName,
+      productDescrp,
+      productPrice,
+      discount,
+      endDate,
+    };
+    let productResponse = await interfaceSql.update(
+      barberId,
+      productID,
+      productDataUpdated
+    );
+    res.send(productResponse);
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 const deleteProduct = async (req, res, next) => {
   // delete a product
+  try {
+    const { barberId } = req.body;
+    const { productID } = req.params;
+
+    let productResponse = await interfaceSql.delete(barberId, productID);
+    res.send(productResponse);
+  } catch (error) {
+    res.json(error);
+  }
 };
 module.exports = {
   getProduct,
