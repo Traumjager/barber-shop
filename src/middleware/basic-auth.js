@@ -1,7 +1,9 @@
 'use strict';
 const base64 = require('base-64');
-const pool = require('../Models/pool');
 const bcrypt = require('bcrypt');
+const Interface = require('../Models/auth-interface');
+const authB = new Interface('barber');
+const authC = new Interface('client');
 
 module.exports = async (req, res, next) => {
   if (!req.headers.authorization) {
@@ -25,13 +27,11 @@ module.exports = async (req, res, next) => {
 };
 
 async function authenticateBasic(email, password) {
-  const user = (await pool.query('SELECT * FROM barber WHERE email=$1', [email])).rows[0] || (await pool.query('SELECT * FROM client WHERE email=$1', [email])).rows[0];
-  if (!user) {
-    throw new Error('Invalid Password or Email');
-  }
+  const user = (await authB.read(email)).rows[0] || (await authC.read(email)).rows[0];
+  if (!user) throw new Error('Invalid Password or Email');
+
   const valid = await bcrypt.compare(password, user.password);
-  if (valid) {
-    return user;
-  }
+  if (valid) return user;
+
   throw new Error('Invalid Password or Email');
 }
