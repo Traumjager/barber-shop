@@ -46,10 +46,7 @@ CREATE TABLE services (
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
 	  REFERENCES barber(barber_id)
-
-
 );
-
 
 DROP TABLE IF EXISTS products;
 
@@ -66,7 +63,6 @@ CREATE TABLE products (
       FOREIGN KEY(barber_id) 
 	  REFERENCES barber(barber_id)
 );
-
 
 DROP TABLE IF EXISTS media;
 
@@ -92,9 +88,7 @@ CREATE TABLE subscriptions (
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
       REFERENCES client(client_id)
-
 );    
-
 
 DROP TABLE IF EXISTS tickets;
 
@@ -113,8 +107,8 @@ CREATE TABLE tickets (
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
       REFERENCES services(service_id)
-
 );  
+
 DROP TABLE IF EXISTS queue;
 
 CREATE TABLE queue (
@@ -132,7 +126,6 @@ CREATE TABLE queue (
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
       REFERENCES services(service_id)
-
 );  
 
 DROP TABLE IF EXISTS reviews;
@@ -151,4 +144,3 @@ CREATE TABLE reviews (
       FOREIGN KEY(client_id)
       REFERENCES client(client_id)
 ); 
-
