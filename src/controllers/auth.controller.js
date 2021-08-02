@@ -4,13 +4,13 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const secret = process.env.SECRET;
 const Interface = require('../Models/auth-interface');
-const authB = new Interface('barber');
-const authC = new Interface('client');
+const userB = new Interface('barber');
+const userC = new Interface('client');
 
 const signIn = async (req, res, next) => {
-  req.user.token = jwt.sign(req.user.email, secret);
   const user = {
     user: req.user,
+    token: (req.token = jwt.sign(req.user.email, secret)),
   };
   res.status(200).json(user);
 };
@@ -23,24 +23,24 @@ const signUp = async (req, res, next) => {
     const role = req.body.role;
 
     if (role === 'barber') {
-      const checkUser = await authB.read(req.body.email);
-      const checkClient = await authC.read(req.body.email);
+      const checkUser = await userB.read(req.body.email);
+      const checkClient = await userC.read(req.body.email);
 
       if (checkUser.rows[0]) return next('This email is already a barber registered account');
       if (checkClient.rows[0]) return next('This email is already a client registered account');
 
-      const barber = await authB.create(req.body);
+      const barber = await userB.create(req.body);
       res.status(201).json(barber.rows[0]);
     }
 
     if (role === 'client') {
-      const checkUser = await authC.read(req.body.email);
-      const checkBerber = await authB.read(req.body.email);
+      const checkUser = await userC.read(req.body.email);
+      const checkBerber = await userB.read(req.body.email);
 
       if (checkUser.rows[0]) return next('This email is already a client registered account');
       if (checkBerber.rows[0]) return next('This email is already a Barber registered account');
 
-      const client = await authC.create(req.body);
+      const client = await userC.create(req.body);
       res.status(201).json(client.rows[0]);
     }
   } catch (error) {

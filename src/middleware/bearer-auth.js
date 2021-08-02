@@ -9,14 +9,13 @@ const secret = process.env.SECRET;
 module.exports = async (req, res, next) => {
   try {
     if (!req.headers.authorization) {
-      next('Invalid Auth Headers / Login');
+      return next('Invalid Auth Headers / Login');
     }
-
     const token = req.headers.authorization.split(' ').pop();
-    const validUser = await authenticateWithToken(token);
+    const validUser = await authenticateToken(token);
 
     req.user = validUser;
-    req.token = validUser.token;
+    req.token = jwt.sign(validUser.email, secret);
 
     next();
   } catch (e) {
@@ -24,10 +23,10 @@ module.exports = async (req, res, next) => {
   }
 };
 
-async function authenticateWithToken(token) {
+async function authenticateToken(token) {
   try {
     const parsedToken = jwt.verify(token, secret);
-    const user = (await authB.read(parsedToken.email)).rows[0] || (await authC.read(parsedToken.email)).rows[0];
+    const user = (await authB.read(parsedToken)).rows[0] || (await authC.read(parsedToken)).rows[0];
     if (user) {
       return user;
     }
