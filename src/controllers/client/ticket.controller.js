@@ -8,7 +8,12 @@ const deleteTicket = async (req, res, next) => {
   // delete a ticket
 };
 
+const updateTicket = async (req, res, next) => {
+  // delete a ticket
+};
+
 module.exports = {
   createTicket,
   deleteTicket,
+  updateTicket,
 };
