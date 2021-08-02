@@ -1,10 +1,36 @@
 'use strict';
 const Interface = require('../../Models/serv-prod-Interface');
 const interfaceSql = new Interface('services');
-const addServices = async (re, res, next) => {
+const addServices = async (req, res, next) => {
   // add a service from services list to service board
 };
 
+const getServices = async (req, res, next) => {
+  // get one or all services for one or all barbers from DB
+  
+  try {
+    let serviceResponse;
+    // const { barberID } = req.body;
+    const { barberID } = req.params;
+    const { serviceID } = req.params;
+    if (serviceID) {
+      //get one service for one barber
+      serviceResponse = await interfaceSql.read(serviceID,false);
+      
+    } else if (barberID){
+      //get all services for one barber
+      serviceResponse = await interfaceSql.read(false,barberID);
+      
+    }else{
+      //get all services for all barbers
+      serviceResponse = await interfaceSql.read(false,false);
+
+    }
+    res.send(serviceResponse);
+  } catch (error) {
+    res.json(error);
+  }
+};
 const createServices = async (req, res, next) => {
   // create your services and prices
   console.log('req.body', req.body);
@@ -18,7 +44,7 @@ const createServices = async (req, res, next) => {
       discount,
       endDate,
     } = req.body;
-    let sreviceData = {
+    let serviceData = {
       barberId,
       serviceName,
       serviceDescrp,
@@ -27,10 +53,10 @@ const createServices = async (req, res, next) => {
       discount,
       endDate,
     };
-    let serviceResponse = await interfaceSql.create(sreviceData);
+    let serviceResponse = await interfaceSql.create(serviceData);
     res.send(serviceResponse);
   } catch (error) {
-    res.json(error);
+    res.json(error.message);
   }
 };
 
@@ -47,7 +73,7 @@ const editServices = async (req, res, next) => {
       discount,
       endDate,
     } = req.body;
-    let sreviceDataUpdated = {
+    let serviceDataUpdated = {
       serviceName,
       serviceDescrp,
       servicePrice,
@@ -57,7 +83,7 @@ const editServices = async (req, res, next) => {
     };
     let serviceResponse = await interfaceSql.update(
       serviceID,
-      sreviceDataUpdated,
+      serviceDataUpdated,
     );
     res.send(serviceResponse);
   } catch (error) {
@@ -68,15 +94,28 @@ const editServices = async (req, res, next) => {
 const deleteServices = async (req, res, next) => {
   // delete the service
   try {
-    
+    let serviceResponse;
     const { serviceID } = req.params;
-    let serviceResponse = await interfaceSql.delete(serviceID);
+    const { barberId } = req.params;
+
+    //delete one service for one barber
+    if (serviceID) {
+      serviceResponse = await interfaceSql.delete(serviceID,false);
+      
+    } else if (barberId) {
+      //delete all services for this barber
+      serviceResponse = await interfaceSql.delete(false,barberId);
+      
+    } 
+      
+    
     res.send(serviceResponse);
   } catch (error) {
     res.json(error);
   }
 };
 module.exports = {
+  getServices,
   createServices,
   editServices,
   deleteServices,

@@ -45,7 +45,7 @@ CREATE TABLE services (
     estimated_time varchar(255),
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-	  REFERENCES barber(barber_id)
+	  REFERENCES barber(id)
 );
 
 DROP TABLE IF EXISTS products;
@@ -61,7 +61,7 @@ CREATE TABLE products (
     product_image varchar(255),
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id) 
-	  REFERENCES barber(barber_id)
+	  REFERENCES barber(id)
 );
 
 DROP TABLE IF EXISTS media;
@@ -73,7 +73,7 @@ CREATE TABLE media (
     media_path varchar(255) NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id)
+      REFERENCES barber(id)
 );    
 
 DROP TABLE IF EXISTS subscriptions;
@@ -84,10 +84,10 @@ CREATE TABLE subscriptions (
     client_id int NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id)
+      REFERENCES client(id)
 );    
 
 DROP TABLE IF EXISTS tickets;
@@ -97,16 +97,17 @@ CREATE TABLE tickets (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     service_id int NOT NULL,
-    time int,
+    time TIMESTAMP,
+    -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id),
+      REFERENCES client(id),
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
-      REFERENCES services(service_id)
+      REFERENCES services(id)
 );  
 
 DROP TABLE IF EXISTS queue;
@@ -116,16 +117,17 @@ CREATE TABLE queue (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     service_id int NOT NULL,
-    time int,
+    time TIMESTAMP,
+    -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id),
+      REFERENCES client(id),
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
-      REFERENCES services(service_id)
+      REFERENCES services(id)
 );  
 
 DROP TABLE IF EXISTS reviews;
@@ -135,12 +137,13 @@ CREATE TABLE reviews (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     description varchar(255),
-    date date,
+    date TIMESTAMP,
+    -- '2004-10-19 10:23:54'
     rate int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(barber_id),
+      REFERENCES barber(id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id)
+      REFERENCES client(id)
 ); 

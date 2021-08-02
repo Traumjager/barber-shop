@@ -3,19 +3,8 @@ const interfaceSql = new Interface('products');
 
 const createProduct = async (req, res, next) => {
   // create a Product, description and price
-
-  // id serial PRIMARY KEY,
-  // barber_id int NOT NULL,
-  //   product_name varchar(255) NOT NULL,
-  //   description varchar(255),
-  //   price int NOT NULL,
-  //   discount int default 0,
-  //   end_date date,
-  //   product_image varchar(255)
   try {
-      
-    const {barberId, productName, productDescrp, productPrice, discount, endDate, productImg } =
-      req.body;
+    const { barberId, productName, productDescrp, productPrice, discount, endDate, productImg } = req.body;
     let productData = {
       barberId,
       productName,
@@ -32,13 +21,23 @@ const createProduct = async (req, res, next) => {
   }
 };
 const getProduct = async (req, res, next) => {
-  // we need the barber id
-  // get all products for the barbar
-  try {
-    const { barberID } = req.body;
-    const { productID } = req.params;
+  // get one or all products for one or all barbers from DB
 
-    let productResponse = await interfaceSql.read(barberID, productID);
+  try {
+    let productResponse;
+    // const { barberID } = req.body;
+    const { barberID } = req.params;
+    const { productID } = req.params;
+    if (productID) {
+      //get one product for one barber
+      productResponse = await interfaceSql.read(productID, false);
+    } else if (barberID) {
+      //get all products for one barber
+      productResponse = await interfaceSql.read(false, barberID);
+    } else {
+      //get all products for all barbers
+      productResponse = await interfaceSql.read(false, false);
+    }
     res.send(productResponse);
   } catch (error) {
     res.json(error);
@@ -50,14 +49,7 @@ const editProduct = async (req, res, next) => {
   try {
     const { productID } = req.params;
 
-    const {
-      barberId,
-      productName,
-      productDescrp,
-      productPrice,
-      discount,
-      endDate,
-    } = req.body;
+    const { productName, productDescrp, productPrice, discount, endDate } = req.body;
     let productDataUpdated = {
       productName,
       productDescrp,
@@ -65,11 +57,7 @@ const editProduct = async (req, res, next) => {
       discount,
       endDate,
     };
-    let productResponse = await interfaceSql.update(
-      barberId,
-      productID,
-      productDataUpdated,
-    );
+    let productResponse = await interfaceSql.update(productID, productDataUpdated);
     res.send(productResponse);
   } catch (error) {
     res.json(error);
@@ -79,10 +67,18 @@ const editProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   // delete a product
   try {
-    const { barberId } = req.body;
+    let productResponse;
+    const { barberId } = req.params;
     const { productID } = req.params;
 
-    let productResponse = await interfaceSql.delete(barberId, productID);
+    //delete one product for one barber
+    if (productID) {
+      productResponse = await interfaceSql.delete(productID, false);
+    } else if (barberId) {
+      //delete all products for this barber
+      productResponse = await interfaceSql.delete(false, barberId);
+    }
+
     res.send(productResponse);
   } catch (error) {
     res.json(error);
