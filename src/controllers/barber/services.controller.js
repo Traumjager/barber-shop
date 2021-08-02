@@ -1,5 +1,5 @@
 'use strict';
-const Interface = require('../../Models/Interface');
+const Interface = require('../../Models/serv-prod-Interface');
 const interfaceSql = new Interface('services');
 const addServices = async (re, res, next) => {
   // add a service from services list to service board
@@ -37,10 +37,9 @@ const createServices = async (req, res, next) => {
 const editServices = async (req, res, next) => {
   // update the service
   try {
-    const { seviceID } = req.params;
+    const { serviceID } = req.params;
 
     const {
-      barberId,
       serviceName,
       serviceDescrp,
       servicePrice,
@@ -57,9 +56,8 @@ const editServices = async (req, res, next) => {
       endDate,
     };
     let serviceResponse = await interfaceSql.update(
-      barberId,
-      seviceID,
-      sreviceDataUpdated
+      serviceID,
+      sreviceDataUpdated,
     );
     res.send(serviceResponse);
   } catch (error) {
@@ -70,10 +68,9 @@ const editServices = async (req, res, next) => {
 const deleteServices = async (req, res, next) => {
   // delete the service
   try {
-    const { barberId } = req.body;
-    const { seviceID } = req.params;
-
-    let serviceResponse = await interfaceSql.delete(barberId, seviceID);
+    
+    const { serviceID } = req.params;
+    let serviceResponse = await interfaceSql.delete(serviceID);
     res.send(serviceResponse);
   } catch (error) {
     res.json(error);

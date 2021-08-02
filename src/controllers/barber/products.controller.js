@@ -1,17 +1,29 @@
-const Interface = require('../../Models/Interface');
+const Interface = require('../../Models/serv-prod-Interface');
 const interfaceSql = new Interface('products');
 
 const createProduct = async (req, res, next) => {
   // create a Product, description and price
+
+  // id serial PRIMARY KEY,
+  // barber_id int NOT NULL,
+  //   product_name varchar(255) NOT NULL,
+  //   description varchar(255),
+  //   price int NOT NULL,
+  //   discount int default 0,
+  //   end_date date,
+  //   product_image varchar(255)
   try {
-    const { productName, productDescrp, productPrice, discount, endDate } =
+      
+    const {barberId, productName, productDescrp, productPrice, discount, endDate, productImg } =
       req.body;
     let productData = {
+      barberId,
       productName,
       productDescrp,
       productPrice,
       discount,
       endDate,
+      productImg,
     };
     let productResponse = await interfaceSql.create(productData);
     res.send(productResponse);
@@ -56,7 +68,7 @@ const editProduct = async (req, res, next) => {
     let productResponse = await interfaceSql.update(
       barberId,
       productID,
-      productDataUpdated
+      productDataUpdated,
     );
     res.send(productResponse);
   } catch (error) {
