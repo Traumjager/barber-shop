@@ -29,7 +29,7 @@ CREATE TABLE client (
     gender varchar(255),
     age int,
     phone_num varchar(255),
-    profile_pic varchar(255),
+    profile_pic varchar(255)
 );
 
 DROP TABLE IF EXISTS services;
@@ -140,7 +140,7 @@ CREATE TABLE reviews (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     description varchar(255),
-    date datetime,
+    date date,
     rate int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
