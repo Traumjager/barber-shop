@@ -149,3 +149,4 @@ CREATE TABLE reviews (
       FOREIGN KEY(client_id)
       REFERENCES client(id)
 ); 
+
