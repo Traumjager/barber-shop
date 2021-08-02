@@ -6,8 +6,11 @@ const media = new InterFace('media');
 
 const addPhotos = async (req, res, next) => {
   try {
-    media.createImges(req);
-    res.json('path save to the database');
+    const data = await media.createImges(req);
+    if(!data){
+      res.send('uploaded field');
+    }
+    res.json(data);
   } catch (error) {
     res.json(error);
   }
@@ -16,8 +19,12 @@ const addPhotos = async (req, res, next) => {
 const addVideos = async (req, res, next) => {
   // save videos to database
   try {
-    media.createVideos(req);
-    res.json('path save to the database');
+    const data = await media.createVideos(req);
+
+    if(!data){
+      res.send('uploaded field');
+    }
+    res.json(data);
   } catch (error) {
     res.json(error);
   }

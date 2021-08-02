@@ -15,11 +15,14 @@ class Interface {
   createImges(req) {
     try {
       const sql = `INSERT INTO ${this.table} (barber_id,media_type,media_path) VALUES ($1,$2,$3) RETURNING *;`;
-
+      const data = [];
       req.files.forEach(async (file) => {
         const path = `/images/cuts/${file.filename}`;
-        await pool.query(sql, [req.body.id, 'image', path]);
+        const response = await pool.query(sql, [req.body.id, 'image', path]);
+        data.push(response);
       });
+
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -28,11 +31,14 @@ class Interface {
   createVideos(req) {
     try {
       const sql = `INSERT INTO ${this.table} (barber_id,media_type,media_path) VALUES ($1,$2,$3) RETURNING *;`;
-
+      const data = [];
       req.files.forEach(async (file) => {
         const path = `/videos/${file.filename}`;
-        await pool.query(sql, [req.body.id, 'video', path]);
+        const response = await pool.query(sql, [req.body.id, 'video', path]);
+        data.push(response);
       });
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
