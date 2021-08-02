@@ -44,7 +44,7 @@ const {
 Router.get('/', getBarbers);
 Router.get('/subs', getSubscribers);
 Router.put('/', updateBarber);
-Router.get('/media', uploadcuts.array('cuts', 5), getAllMedia);
+Router.get('/media',getAllMedia);
 Router.post('/media/photos', uploadcuts.array('cuts', 5), addPhotos);
 Router.post('/media/videos', uploadvideo.array('videos', 5), addVideos);
 Router.delete('/media/photos', deletePhotos);

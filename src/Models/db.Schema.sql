@@ -61,7 +61,7 @@ CREATE TABLE products (
     price int NOT NULL,
     discount int default 0,
     end_date date,
-    product_image varchar(255)
+    product_image varchar(255),
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id) 
 	  REFERENCES barber(barber_id)
@@ -74,7 +74,7 @@ CREATE TABLE media (
 	id serial PRIMARY KEY,
     barber_id int NOT NULL,
     media_type varchar(255) NOT NULL,
-    media_path varchar(255) NOT NULL
+    media_path varchar(255) NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(barber_id)
@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS subscriptions;
 CREATE TABLE subscriptions (
 	id serial PRIMARY KEY,
     barber_id int NOT NULL,
-    client_id int NOT NULL
+    client_id int NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(barber_id),
@@ -103,13 +103,13 @@ CREATE TABLE tickets (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     service_id int NOT NULL,
-    time int
+    time int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(barber_id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id)
+      REFERENCES client(client_id),
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
       REFERENCES services(service_id)
@@ -122,13 +122,13 @@ CREATE TABLE queue (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     service_id int NOT NULL,
-    time int
+    time int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(barber_id),
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(client_id)
+      REFERENCES client(client_id),
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
       REFERENCES services(service_id)
@@ -143,7 +143,7 @@ CREATE TABLE reviews (
     client_id int NOT NULL,
     description varchar(255),
     date date,
-    rate int
+    rate int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(barber_id),
