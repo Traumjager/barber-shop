@@ -97,7 +97,8 @@ CREATE TABLE tickets (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     service_id int NOT NULL,
-    time int,
+    time TIMESTAMP,
+    -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(id),
@@ -116,7 +117,8 @@ CREATE TABLE queue (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     service_id int NOT NULL,
-    time int,
+    time TIMESTAMP,
+    -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(id),
@@ -135,7 +137,8 @@ CREATE TABLE reviews (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     description varchar(255),
-    date date,
+    date TIMESTAMP,
+    -- '2004-10-19 10:23:54'
     rate int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
