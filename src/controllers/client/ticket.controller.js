@@ -15,17 +15,17 @@ const createTicket = async (req, res, next) => {
 const deleteTicket = async (req, res, next) => {
   // delete a ticket
 
-  // const data = await ticket.delete(req.body);
-  console.log('sssss');
-  // res.json(data);
+  const data = await ticket.delete(req.body);
+  
+  res.json(data);
 
 };
 
 const updateTicket = async (req, res, next) => {
   // delete a ticket
-  // const data = await ticket.update(req.body);
-  console.log('dddddddddddddd');
-  
+  const data = await ticket.update(req.body);
+
+  res.json(data);
 };
 
 module.exports = {
