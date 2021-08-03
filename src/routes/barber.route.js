@@ -7,12 +7,13 @@ const { getRequestTicket, addToQueue, removeTheRequest, addToQueueManual } = req
 const { getProduct, createProduct, editProduct, deleteProduct } = require('../controllers/barber/products.controller');
 const getSubscribers = require('../controllers/barber/subs.controller');
 const bearer = require('../middleware/bearer-auth');
+const basic = require('../middleware/basic-auth');
 const { uploadcuts, uploadvideo, uploadProfilepic, uploadProduct } = require('../middleware/multer');
 
-Router.get('/', bearer, getBarbers);
-Router.get('/:id', bearer, getBarbers); // need to add multer middleware
-Router.put('/:id', bearer, updateBarber);
-Router.delete('/:id', bearer, deleteBerber);
+Router.get('/user', bearer, getBarbers);
+Router.get('/user/:id', bearer, getBarbers); // need to add multer middleware
+Router.put('/user/:id', uploadProfilepic.single('profile_pic'), bearer, updateBarber);
+Router.delete('/user', basic, deleteBerber);
 Router.get('/subs', getSubscribers);
 Router.get('/media', getAllMedia);
 Router.post('/media/photos', uploadcuts.array('cuts', 5), addPhotos);
@@ -33,8 +34,6 @@ Router.post('/queue', addToQueue);
 Router.delete('/queue', removeTheRequest);
 Router.post('/queue/manual', addToQueueManual);
 
-
-
-Router.get('/requests/:id',getRequestTicket);
+Router.get('/requests/:id', getRequestTicket);
 
 module.exports = Router;

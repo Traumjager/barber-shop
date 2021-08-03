@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const secret = process.env.SECRET;
-const Interface = require('../Models/auth-interface');
+const Interface = require('../Models/auth-model');
 const userB = new Interface('barber');
 const userC = new Interface('client');
 
@@ -29,7 +29,7 @@ const signUp = async (req, res, next) => {
       if (checkUser.rows[0]) return next('This email is already a barber registered account');
       if (checkClient.rows[0]) return next('This email is already a client registered account');
 
-      const barber = await userB.create(req.body);
+      const barber = await userB.create(req);
       res.status(201).json(barber.rows[0]);
     }
 
@@ -40,7 +40,7 @@ const signUp = async (req, res, next) => {
       if (checkUser.rows[0]) return next('This email is already a client registered account');
       if (checkBerber.rows[0]) return next('This email is already a Barber registered account');
 
-      const client = await userC.create(req.body);
+      const client = await userC.create(req);
       res.status(201).json(client.rows[0]);
     }
   } catch (error) {
