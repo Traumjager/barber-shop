@@ -9,7 +9,7 @@ const createTicket = async (req, res, next) => {
 
   const data = await ticket.create(req.body);
 
-  res.json(data);
+  res.json(data.rows);
 };
 
 const deleteTicket = async (req, res, next) => {
@@ -18,9 +18,8 @@ const deleteTicket = async (req, res, next) => {
   console.log(req.params.id);
 
   const data = await ticket.delete(req.params);
-  
-  res.json(data);
 
+  res.json(data);
 };
 
 const updateTicket = async (req, res, next) => {

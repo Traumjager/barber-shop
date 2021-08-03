@@ -27,8 +27,6 @@ CREATE TABLE barber (
     verified boolean default false
 );
 
-
-
 CREATE TABLE client (
 	id serial PRIMARY KEY,
 	user_name varchar(255) NOT NULL,
@@ -42,8 +40,6 @@ CREATE TABLE client (
     verification_token varchar(255),
     verified boolean default false
 );
-
-
 
 CREATE TABLE services (
 	id serial PRIMARY KEY,
@@ -59,8 +55,6 @@ CREATE TABLE services (
 	  REFERENCES barber(id) ON DELETE CASCADE
 );
 
-
-
 CREATE TABLE products (
 	id serial PRIMARY KEY,
 	barber_id int NOT NULL,
@@ -75,8 +69,6 @@ CREATE TABLE products (
 	  REFERENCES barber(id) ON DELETE CASCADE
 );
 
-
-
 CREATE TABLE media (
 	id serial PRIMARY KEY,
     barber_id int NOT NULL,
@@ -85,8 +77,7 @@ CREATE TABLE media (
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
       REFERENCES barber(id) ON DELETE CASCADE
-);    
-
+);  
 
 
 CREATE TABLE subscriptions (
@@ -99,15 +90,13 @@ CREATE TABLE subscriptions (
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
       REFERENCES client(id) ON DELETE CASCADE
-);    
-
-
+);   
 
 CREATE TABLE tickets (
 	id serial PRIMARY KEY,
-    barber_id int NOT NULL,
-    client_id int NOT NULL,
-    service_id int NOT NULL,
+    barber_id int NOT NULL REFERENCES barber(id) ON DELETE CASCADE,
+    client_id int NOT NULL REFERENCES client(id) ON DELETE CASCADE,
+    service_id int NOT NULL REFERENCES services(id) ON DELETE CASCADE,
     time varchar(255) NOT NULL,
     -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
@@ -139,8 +128,7 @@ CREATE TABLE queue (
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
       REFERENCES services(id) ON DELETE CASCADE
-);  
-
+);
 
 
 CREATE TABLE reviews (

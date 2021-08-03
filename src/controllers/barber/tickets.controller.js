@@ -17,15 +17,24 @@ const addToQueue = async (req, res, next) => {
   // after you accept or ignore use the delete function in line 2
   // when the barber accept
 
+  const queue = new Interface('queue');
 
+  const addedQueue = await queue.create(req.body);
+  const deletedTicket = await ticket.delete(req.body.ticketID);
+
+  res.json(addedQueue, deletedTicket);
 };
-const addToQueueManual = async (req, res, next) => {};
+const addToQueueManual = async (req, res, next) => {
+  const data = await ticket.create(req.body);
+
+  res.json(data);
+};
 const removeTheRequest = async (req, res, next) => {
   // after you accept or ignore use the delete function in line 2
   console.log(req.params.id);
 
   const data = await ticket.delete(req.params);
-  
+
   res.json(data);
 };
 
