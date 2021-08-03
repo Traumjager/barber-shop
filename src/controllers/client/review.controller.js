@@ -7,7 +7,7 @@ const getReviews = async (req, res, next) => {
   const { barberId } = req.params;
   if (!barberId) next('Bad Request');
   const reviews = await interFace.read(barberId);
-  res.json(reviews.rows[0]);
+  res.json(reviews.rows);
 };
 
 const postReview = async (req, res, next) => {
