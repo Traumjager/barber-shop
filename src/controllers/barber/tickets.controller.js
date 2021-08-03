@@ -3,7 +3,7 @@ const deleteTicket = (id) => {
 };
 
 const getRequestTicket = async (req, res, next) => {
-  // get all the tickets that in hold
+  
 };
 
 const addToQueue = async (req, res, next) => {
