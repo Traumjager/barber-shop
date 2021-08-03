@@ -45,22 +45,7 @@ class Interface {
 
       const { email, password, age, gender, city, address, phone_num, working_hours, holidays, shop_name, shop_gender } = req.body;
       const sql = `INSERT INTO barber (user_name,email,password,age,gender,city,address,profile_pic,phone_num,working_hours,holidays,shop_name,shop_gender,state) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *;`;
-      const saveValues = [
-        user_name,
-        email,
-        password,
-        age,
-        gender,
-        city,
-        address,
-        profile_pic,
-        phone_num,
-        working_hours,
-        holidays,
-        shop_name,
-        shop_gender,
-        state,
-      ];
+      const saveValues = [user_name, email, password, age, gender, city, address, profile_pic, phone_num, working_hours, holidays, shop_name, shop_gender, state];
       const barber = pool.query(sql, saveValues);
       return barber;
     }
@@ -96,21 +81,7 @@ class Interface {
         const oldPic = await pool.query(`SELECT * FROM ${this.table} WHERE user_name=$1`, [data.user_name]);
         profile_pic = `/images/profilePics/${oldPic.rows[0].profile_pic}`;
       }
-      saveValues = [
-        data.user_name,
-        data.age,
-        data.gender,
-        data.city,
-        data.address,
-        profile_pic,
-        data.phone_num,
-        data.working_hours,
-        data.holidays,
-        data.shop_name,
-        data.shop_gender,
-        data.state,
-        id,
-      ];
+      saveValues = [data.user_name, data.age, data.gender, data.city, data.address, profile_pic, data.phone_num, data.working_hours, data.holidays, data.shop_name, data.shop_gender, data.state, id];
     }
 
     if (this.table === 'client') {

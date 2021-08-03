@@ -1,4 +1,12 @@
+DROP TABLE IF EXISTS media;
+DROP TABLE IF EXISTS subscriptions;
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS queue;
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS services;
 DROP TABLE IF EXISTS barber;
+DROP TABLE IF EXISTS client;
 
 CREATE TABLE barber (
 	id serial PRIMARY KEY,
@@ -18,7 +26,7 @@ CREATE TABLE barber (
     state varchar(255)
 );
 
-DROP TABLE IF EXISTS client;
+
 
 CREATE TABLE client (
 	id serial PRIMARY KEY,
@@ -32,7 +40,7 @@ CREATE TABLE client (
     profile_pic varchar(255)
 );
 
-DROP TABLE IF EXISTS services;
+
 
 CREATE TABLE services (
 	id serial PRIMARY KEY,
@@ -48,7 +56,7 @@ CREATE TABLE services (
 	  REFERENCES barber(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS products;
+
 
 CREATE TABLE products (
 	id serial PRIMARY KEY,
@@ -64,7 +72,7 @@ CREATE TABLE products (
 	  REFERENCES barber(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS media;
+
 
 CREATE TABLE media (
 	id serial PRIMARY KEY,
@@ -76,7 +84,7 @@ CREATE TABLE media (
       REFERENCES barber(id) ON DELETE CASCADE
 );    
 
-DROP TABLE IF EXISTS subscriptions;
+
 
 CREATE TABLE subscriptions (
 	id serial PRIMARY KEY,
@@ -90,7 +98,7 @@ CREATE TABLE subscriptions (
       REFERENCES client(id) ON DELETE CASCADE
 );    
 
-DROP TABLE IF EXISTS tickets;
+
 
 CREATE TABLE tickets (
 	id serial PRIMARY KEY,
@@ -110,7 +118,7 @@ CREATE TABLE tickets (
       REFERENCES services(id) ON DELETE CASCADE
 );  
 
-DROP TABLE IF EXISTS queue;
+
 
 CREATE TABLE queue (
 	id serial PRIMARY KEY,
@@ -130,7 +138,7 @@ CREATE TABLE queue (
       REFERENCES services(id) ON DELETE CASCADE
 );  
 
-DROP TABLE IF EXISTS reviews;
+
 
 CREATE TABLE reviews (
 	id serial PRIMARY KEY,
