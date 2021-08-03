@@ -6,7 +6,7 @@ const secret = process.env.SECRET;
 const Interface = require('../Models/auth-interface');
 const userB = new Interface('barber');
 const userC = new Interface('client');
-
+const mailer = require('./mailer');
 const signIn = async (req, res, next) => {
   const user = {
     user: req.user,
@@ -19,9 +19,9 @@ const signUp = async (req, res, next) => {
   try {
     const pass = await bcrypt.hash(req.body.password, 10);
     req.body.password = pass;
-
+    req.body.verification = Math.floor(Math.random() * 9) + 1;
+    mailer.send(req.body.email, req.body.verification);
     const role = req.body.role;
-
     if (role === 'barber') {
       const checkUser = await userB.read(req.body.email);
       const checkClient = await userC.read(req.body.email);
@@ -30,7 +30,7 @@ const signUp = async (req, res, next) => {
       if (checkClient.rows[0]) return next('This email is already a client registered account');
 
       const barber = await userB.create(req.body);
-      res.status(201).json(barber.rows[0]);
+      res.status(201).json(barber.rows[0], "Your account must be verified");
     }
 
     if (role === 'client') {
@@ -41,12 +41,13 @@ const signUp = async (req, res, next) => {
       if (checkBerber.rows[0]) return next('This email is already a Barber registered account');
 
       const client = await userC.create(req.body);
-      res.status(201).json(client.rows[0]);
+      res.status(201).json(client.rows[0], "Your account must be verified");
     }
   } catch (error) {
     res.status(403).json(error.message);
   }
 };
+
 
 module.exports = {
   signIn,

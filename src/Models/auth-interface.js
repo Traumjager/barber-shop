@@ -39,8 +39,8 @@ class Interface {
       // } else {
       //   profile_pic = `/images/profilePics/${'###'}`;
       // }
-      const { email, password, age, gender, city, address, phone_num, working_hours, holidays, shop_name, shop_gender } = user;
-      const sql = `INSERT INTO ${this.table} (user_name,email,password,age,gender,city,address,profile_pic,phone_num,working_hours,holidays,shop_name,shop_gender,state) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *;`;
+      const { email, password, age, gender, city, address, phone_num, working_hours, holidays, shop_name, shop_gender, verification } = user;
+      const sql = `INSERT INTO ${this.table} (user_name,email,password,age,gender,city,address,profile_pic,phone_num,working_hours,holidays,shop_name,shop_gender,state,verification_token) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *;`;
       const saveValues = [
         user_name,
         email,
@@ -56,18 +56,23 @@ class Interface {
         shop_name,
         shop_gender,
         state,
+        verification
       ];
       const barber = pool.query(sql, saveValues);
       return barber;
     }
     const user_name = `${user.firstName} ${user.lastName}`;
-    const { email, password, age, gender, city, profile_pic, phone_num } = user;
-    const sql = 'INSERT INTO client (user_name,email,password,age,gender,city,profile_pic,phone_num) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;';
-    const saveValues = [user_name, email, password, age, gender, city, profile_pic, phone_num];
+    const { email, password, age, gender, city, profile_pic, phone_num, verification } = user;
+    const sql = 'INSERT INTO client (user_name,email,password,age,gender,city,profile_pic,phone_num,verification_token) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;';
+    const saveValues = [user_name, email, password, age, gender, city, profile_pic, phone_num, verification];
     const client = pool.query(sql, saveValues);
     return client;
   }
-
+  async verify(email, verificationToken) {
+    const queryString = `select * from ${this.table} where verification_token=$1 and email=$2 RETURNING *`;
+    const queryParams = [verificationToken, email];
+    return pool.query(queryString, queryParams);
+  }
   async update(id, data) {
     let sql, saveValues;
     if (this.table === 'barber') {
@@ -122,6 +127,7 @@ class Barber {
     this.working_hours = data.working_hours;
     this.holidays = data.holidays;
     this.state = data.state;
+    this.verification = data.verification;
   }
 }
 
@@ -134,6 +140,7 @@ class Client {
     this.age = data.age;
     this.phone_num = data.phone_num;
     this.profile_pic = data.profile_pic;
+    this.verification = data.verification;
   }
 }
 
