@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS services;
 DROP TABLE IF EXISTS barber;
 DROP TABLE IF EXISTS client;
-
 CREATE TABLE barber (
 	id serial PRIMARY KEY,
 	user_name varchar(255) NOT NULL,
@@ -23,9 +22,10 @@ CREATE TABLE barber (
     profile_pic varchar(255),
     working_hours varchar(255),
     holidays varchar(255),
-    state varchar(255)
+    state varchar(255),
+    verification_token varchar(255),
+    verified boolean default false
 );
-
 
 CREATE TABLE client (
 	id serial PRIMARY KEY,
@@ -36,9 +36,10 @@ CREATE TABLE client (
     gender varchar(255),
     age int,
     phone_num varchar(255),
-    profile_pic varchar(255)
+    profile_pic varchar(255),
+    verification_token varchar(255),
+    verified boolean default false
 );
-
 
 CREATE TABLE services (
 	id serial PRIMARY KEY,
@@ -54,7 +55,6 @@ CREATE TABLE services (
 	  REFERENCES barber(id) ON DELETE CASCADE
 );
 
-
 CREATE TABLE products (
 	id serial PRIMARY KEY,
 	barber_id int NOT NULL,
@@ -68,7 +68,6 @@ CREATE TABLE products (
       FOREIGN KEY(barber_id) 
 	  REFERENCES barber(id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE media (
 	id serial PRIMARY KEY,
@@ -92,8 +91,6 @@ CREATE TABLE subscriptions (
       FOREIGN KEY(client_id)
       REFERENCES client(id) ON DELETE CASCADE
 );   
-
-
 
 CREATE TABLE tickets (
 	id serial PRIMARY KEY,
@@ -132,7 +129,6 @@ CREATE TABLE queue (
       FOREIGN KEY(service_id)
       REFERENCES services(id) ON DELETE CASCADE
 );
-
 
 
 CREATE TABLE reviews (

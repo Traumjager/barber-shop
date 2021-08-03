@@ -6,7 +6,8 @@ const secret = process.env.SECRET;
 const Interface = require('../Models/auth-model');
 const userB = new Interface('barber');
 const userC = new Interface('client');
-
+const mailer = require('./mailer');
+const { v4: uuidv4 } = require('uuid');
 const signIn = async (req, res, next) => {
   const user = {
     user: req.user,
@@ -19,9 +20,11 @@ const signUp = async (req, res, next) => {
   try {
     const pass = await bcrypt.hash(req.body.password, 10);
     req.body.password = pass;
-
+    let verificationToken = uuidv4().split('-')[0];
+    req.body.verification = verificationToken;
+    console.log(req.body.verification);
+    mailer.send(req.body.email, req.body.verification);
     const role = req.body.role;
-
     if (role === 'barber') {
       const checkUser = await userB.read(req.body.email);
       const checkClient = await userC.read(req.body.email);
@@ -47,8 +50,22 @@ const signUp = async (req, res, next) => {
     res.status(403).json(error.message);
   }
 };
+const verify = async (req, res, next) => {
+  const { email, role } = req.body;
+  if (role == 'barber') {
+    const result = await userB.updateVerify(email);
+    res.status(200).json(result.rows[0])
+  }
+  else {
+    const result = await userC.updateVerify(email);
+    res.status(200).json(result.rows[0])
+  }
+
+
+}
 
 module.exports = {
   signIn,
   signUp,
+  verify
 };
