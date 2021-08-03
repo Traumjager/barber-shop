@@ -7,16 +7,14 @@ const { addBarber, removeBarber } = require('../controllers/client/subs.controll
 const bearer = require('../middleware/bearer-auth');
 
 //
+Router.get('/', bearer, getClients);
+Router.get('/:id', bearer, getClients);
+// Router.put('/:id', updateClients);
+// Router.delete('/:id', bearer, deleteClient);
+
 Router.post('/tickets', createTicket);
 Router.delete('/tickets',deleteTicket);
 Router.put('/tickets',updateTicket );
-
-Router.get('/', bearer, getClients);
-Router.get('/:id', bearer, getClients);
-Router.put('/:id', updateClients);
-Router.delete('/:id', bearer, deleteClient);
-
-
 Router.get('/reviews/:barberId', getReviews);
 Router.post('/reviews', postReview);
 Router.delete('/reviews/:reviewId', deleteReview);
