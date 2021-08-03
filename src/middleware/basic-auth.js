@@ -1,7 +1,7 @@
 'use strict';
 const base64 = require('base-64');
 const bcrypt = require('bcrypt');
-const Interface = require('../Models/auth-interface');
+const Interface = require('../Models/auth-model');
 const authB = new Interface('barber');
 const authC = new Interface('client');
 

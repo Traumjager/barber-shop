@@ -1,6 +1,6 @@
 'use strict';
 const jwt = require('jsonwebtoken');
-const Interface = require('../Models/auth-interface');
+const Interface = require('../Models/auth-model');
 const authB = new Interface('barber');
 const authC = new Interface('client');
 require('dotenv').config();
