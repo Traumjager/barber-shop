@@ -5,11 +5,23 @@ class Interface {
     this.table = table;
   }
 
-  async read(req) {
-    const { id } = req;
-    const sql = `SELECT * FROM ${this.table} WHERE barber_id=$1;`;
-    const data = await pool.query(sql, [id]);
-    return data;
+  async read(barberID,clientID) {
+    if (barberID) {
+      
+      const sql = `SELECT tickets.id,tickets.time, client.user_name, client.phone_num,services.service_name, services.price, services.estimated_time
+      FROM tickets
+      INNER JOIN client ON client.id=tickets.client_id 
+      INNER JOIN services ON services.id=tickets.service_id WHERE tickets.barber_id =$1;`;
+      const data = await pool.query(sql, [barberID]);
+      return data;
+    } else if(clientID){
+      const sql = `SELECT tickets.id,tickets.time, client.user_name, client.phone_num,services.service_name, services.price, services.estimated_time
+      FROM tickets
+      INNER JOIN client ON client.id=tickets.client_id 
+      INNER JOIN services ON services.id=tickets.service_id WHERE tickets.client_id =$1;`;
+      const data = await pool.query(sql, [clientID]);
+      return data;
+    }
   }
   create(req) {
     const {barbarId,serviseId,clientId,time} = req;
@@ -40,9 +52,10 @@ class Interface {
   }
 
   async delete(req) {
-    const {ticketId,clientId} = req;
-    const sql = `DELETE FROM ${this.table} WHERE id=$1 AND client_id=$2 RETURNING *;`;
-    const response = await pool.query(sql, [ticketId,clientId]);
+    const {id} = req;
+    console.log(id);
+    const sql = `DELETE FROM ${this.table} WHERE id=$1 RETURNING *;`;
+    const response = await pool.query(sql, [id]);
 
     return response;
   }

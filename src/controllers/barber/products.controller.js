@@ -1,12 +1,12 @@
-const Interface = require('../../Models/serv-prod-Interface');
+const Interface = require('../../Models/serv-prod-interface');
 const interfaceSql = new Interface('products');
 
 const createProduct = async (req, res, next) => {
   // create a Product, description and price
   try {
-    const { barberId, productName, productDescrp, productPrice, discount, endDate, productImg } = req.body;
+    const { barberID, productName, productDescrp, productPrice, discount, endDate, productImg } = req.body;
     let productData = {
-      barberId,
+      barberID,
       productName,
       productDescrp,
       productPrice,
@@ -28,10 +28,10 @@ const getProduct = async (req, res, next) => {
     // const { barberID } = req.body;
     const { barberID } = req.params;
     const { productID } = req.params;
-    if (productID) {
+    if (productID != '0') {
       //get one product for one barber
       productResponse = await interfaceSql.read(productID, false);
-    } else if (barberID) {
+    } else if (barberID != '0') {
       //get all products for one barber
       productResponse = await interfaceSql.read(false, barberID);
     } else {
@@ -68,15 +68,15 @@ const deleteProduct = async (req, res, next) => {
   // delete a product
   try {
     let productResponse;
-    const { barberId } = req.params;
+    const { barberID } = req.params;
     const { productID } = req.params;
 
     //delete one product for one barber
-    if (productID) {
+    if (productID != '0') {
       productResponse = await interfaceSql.delete(productID, false);
-    } else if (barberId) {
+    } else if (barberID) {
       //delete all products for this barber
-      productResponse = await interfaceSql.delete(false, barberId);
+      productResponse = await interfaceSql.delete(false, barberID);
     }
 
     res.send(productResponse);

@@ -15,7 +15,9 @@ const createTicket = async (req, res, next) => {
 const deleteTicket = async (req, res, next) => {
   // delete a ticket
 
-  const data = await ticket.delete(req.body);
+  console.log(req.params.id);
+
+  const data = await ticket.delete(req.params);
   
   res.json(data);
 

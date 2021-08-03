@@ -1,30 +1,26 @@
 'use strict';
-const Interface = require('../../Models/serv-prod-Interface');
+const Interface = require('../../Models/serv-prod-interface');
 const interfaceSql = new Interface('services');
-const addServices = async (req, res, next) => {
-  // add a service from services list to service board
-};
 
 const getServices = async (req, res, next) => {
   // get one or all services for one or all barbers from DB
-  
+
   try {
     let serviceResponse;
     // const { barberID } = req.body;
     const { barberID } = req.params;
     const { serviceID } = req.params;
-    if (serviceID) {
-      //get one service for one barber
-      serviceResponse = await interfaceSql.read(serviceID,false);
-      
-    } else if (barberID){
-      //get all services for one barber
-      serviceResponse = await interfaceSql.read(false,barberID);
-      
-    }else{
-      //get all services for all barbers
-      serviceResponse = await interfaceSql.read(false,false);
 
+    if (serviceID != '0') {
+      console.log('serviceID,barberID', serviceID, barberID);
+      //get one service for one barber
+      serviceResponse = await interfaceSql.read(serviceID, false);
+    } else if (barberID != '0') {
+      //get all services for one barber
+      serviceResponse = await interfaceSql.read(false, barberID);
+    } else {
+      //get all services for all barbers
+      serviceResponse = await interfaceSql.read(false, false);
     }
     res.send(serviceResponse);
   } catch (error) {
@@ -35,17 +31,9 @@ const createServices = async (req, res, next) => {
   // create your services and prices
   console.log('req.body', req.body);
   try {
-    const {
-      barberId,
-      serviceName,
-      serviceDescrp,
-      servicePrice,
-      estimatedTime,
-      discount,
-      endDate,
-    } = req.body;
+    const { barberID, serviceName, serviceDescrp, servicePrice, estimatedTime, discount, endDate } = req.body;
     let serviceData = {
-      barberId,
+      barberID,
       serviceName,
       serviceDescrp,
       servicePrice,
@@ -65,14 +53,7 @@ const editServices = async (req, res, next) => {
   try {
     const { serviceID } = req.params;
 
-    const {
-      serviceName,
-      serviceDescrp,
-      servicePrice,
-      estimatedTime,
-      discount,
-      endDate,
-    } = req.body;
+    const { serviceName, serviceDescrp, servicePrice, estimatedTime, discount, endDate } = req.body;
     let serviceDataUpdated = {
       serviceName,
       serviceDescrp,
@@ -81,10 +62,7 @@ const editServices = async (req, res, next) => {
       discount,
       endDate,
     };
-    let serviceResponse = await interfaceSql.update(
-      serviceID,
-      serviceDataUpdated,
-    );
+    let serviceResponse = await interfaceSql.update(serviceID, serviceDataUpdated);
     res.send(serviceResponse);
   } catch (error) {
     res.json(error);
@@ -96,19 +74,16 @@ const deleteServices = async (req, res, next) => {
   try {
     let serviceResponse;
     const { serviceID } = req.params;
-    const { barberId } = req.params;
+    const { barberID } = req.params;
 
     //delete one service for one barber
-    if (serviceID) {
-      serviceResponse = await interfaceSql.delete(serviceID,false);
-      
-    } else if (barberId) {
+    if (serviceID != '0') {
+      serviceResponse = await interfaceSql.delete(serviceID, false);
+    } else if (barberID) {
       //delete all services for this barber
-      serviceResponse = await interfaceSql.delete(false,barberId);
-      
-    } 
-      
-    
+      serviceResponse = await interfaceSql.delete(false, barberID);
+    }
+
     res.send(serviceResponse);
   } catch (error) {
     res.json(error);
@@ -119,5 +94,4 @@ module.exports = {
   createServices,
   editServices,
   deleteServices,
-  addServices,
 };
