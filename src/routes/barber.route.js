@@ -33,4 +33,8 @@ Router.post('/queue', addToQueue);
 Router.delete('/queue', removeTheRequest);
 Router.post('/queue/manual', addToQueueManual);
 
+
+
+Router.get('/requests/:id',getRequestTicket);
+
 module.exports = Router;
