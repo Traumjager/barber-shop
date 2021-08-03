@@ -45,7 +45,7 @@ CREATE TABLE services (
     estimated_time varchar(255),
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-	  REFERENCES barber(id)
+	  REFERENCES barber(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS products;
@@ -61,7 +61,7 @@ CREATE TABLE products (
     product_image varchar(255),
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id) 
-	  REFERENCES barber(id)
+	  REFERENCES barber(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS media;
@@ -73,7 +73,7 @@ CREATE TABLE media (
     media_path varchar(255) NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(id)
+      REFERENCES barber(id) ON DELETE CASCADE
 );    
 
 DROP TABLE IF EXISTS subscriptions;
@@ -84,10 +84,10 @@ CREATE TABLE subscriptions (
     client_id int NOT NULL,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(id),
+      REFERENCES barber(id) ON DELETE CASCADE,
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(id)
+      REFERENCES client(id) ON DELETE CASCADE
 );    
 
 DROP TABLE IF EXISTS tickets;
@@ -101,13 +101,13 @@ CREATE TABLE tickets (
     -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(id),
+      REFERENCES barber(id) ON DELETE CASCADE,
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(id),
+      REFERENCES client(id) ON DELETE CASCADE,
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
-      REFERENCES services(id)
+      REFERENCES services(id) ON DELETE CASCADE
 );  
 
 DROP TABLE IF EXISTS queue;
@@ -121,13 +121,13 @@ CREATE TABLE queue (
     -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(id),
+      REFERENCES barber(id) ON DELETE CASCADE,
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(id),
+      REFERENCES client(id) ON DELETE CASCADE,
       CONSTRAINT fk_service
       FOREIGN KEY(service_id)
-      REFERENCES services(id)
+      REFERENCES services(id) ON DELETE CASCADE
 );  
 
 DROP TABLE IF EXISTS reviews;
@@ -142,8 +142,8 @@ CREATE TABLE reviews (
     rate int,
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)
-      REFERENCES barber(id),
+      REFERENCES barber(id) ON DELETE CASCADE,
      CONSTRAINT fk_client
       FOREIGN KEY(client_id)
-      REFERENCES client(id)
+      REFERENCES client(id) ON DELETE CASCADE
 ); 
