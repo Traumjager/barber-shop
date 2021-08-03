@@ -54,6 +54,9 @@ Router.delete('/queue/delete/:queueID/:barberID/:clientID', deleteQueue);
 
 
 
-Router.get('/requests/:id',getRequestTicket);
+Router.get('/requests/:barberID/:clientID',getRequestTicket);
+Router.delete('/requests/:id',removeTheRequest);
+// http://localhost:3003/barber/requests/0/4
+
 
 module.exports = Router;

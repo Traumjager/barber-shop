@@ -13,7 +13,7 @@ Router.get('/:id', bearer, getClients);
 // Router.delete('/:id', bearer, deleteClient);
 
 Router.post('/tickets', createTicket);
-Router.delete('/tickets',deleteTicket);
+Router.delete('/tickets/:id',deleteTicket);
 Router.put('/tickets',updateTicket );
 Router.get('/reviews/:barberId', getReviews);
 Router.post('/reviews', postReview);
