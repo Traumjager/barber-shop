@@ -52,4 +52,8 @@ Router.post('/queue/manual', addToQueueManual);
 Router.get('/queue/get', getQueue);
 Router.delete('/queue/delete/:queueID/:barberID/:clientID', deleteQueue);
 
+
+
+Router.get('/requests/:id',getRequestTicket);
+
 module.exports = Router;
