@@ -1,5 +1,5 @@
 'use strict';
-const Interface = require('../../Models/auth-interface');
+const Interface = require('../../Models/auth-model');
 const userC = new Interface('client');
 
 const getClients = async (req, res, next) => {
@@ -13,9 +13,9 @@ const getClients = async (req, res, next) => {
 };
 
 const updateClients = async (req, res, next) => {
-  const id = req.params.id ? req.params.id : next('Need an ID to update');
   try {
-    const client = await userC.update(id, req.body);
+    const id = req.params.id ? req.params.id : next('Need an ID to update');
+    const client = await userC.update(id, req);
     res.status(200).json(client);
   } catch (error) {
     res.status(403).json(error.message);
@@ -23,7 +23,13 @@ const updateClients = async (req, res, next) => {
 };
 
 const deleteClient = async (req, res, next) => {
-  // dlete a client accout
+  try {
+    const password = req.body.password ? req.body.password : next('WRONG password');
+    await userC.delete(password);
+    res.status(204).send('see you later');
+  } catch (e) {
+    res.status(403).json(e.message);
+  }
 };
 
 module.exports = {

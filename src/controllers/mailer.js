@@ -18,9 +18,9 @@ class Mailer {
         let info = await transporter.sendMail({
             from: 'isalooon@gmail.com', // sender address
             to: reciver, // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: token, // plain text body
-            html: "<b>Hello world?</b>", // html body
+            subject: "verification", // Subject line
+            text: "", // plain text body
+            html: `<b>Hello ${reciver},your verification code is : ${token}</b>`, // html body
         });
 
         console.log("Message sent: %s", info.messageId);

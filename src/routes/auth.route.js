@@ -1,10 +1,11 @@
 'use strict';
 const Router = require('express').Router();
-const { signUp, signIn } = require('../controllers/auth.controller');
+const { signUp, signIn, verify } = require('../controllers/auth.controller');
 const basic = require('../middleware/basic-auth');
-
-// const uploadProfilePic = require('../middleware/multer').uploadProfilepic;
-Router.post('/sign-up', signUp, verifyUser);
-Router.post('/sign-in', basic, signIn); // need to add multer middleware
+const verification = require('../middleware/mailer');
+const uploadProfilePic = require('../middleware/multer').uploadProfilepic;
+Router.post('/verify', verification, verify)
+Router.post('/sign-up', uploadProfilePic.single('profile_pic'), signUp);
+Router.post('/sign-in', basic, signIn);
 
 module.exports = Router;

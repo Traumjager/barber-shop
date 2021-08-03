@@ -1,6 +1,3 @@
-
-
-
 const multer = require('multer');
 
 const profileStorage = multer.diskStorage({
@@ -8,16 +5,18 @@ const profileStorage = multer.diskStorage({
     callBack(null, './src/images/profilePics');
   },
   filename: (req, file, callBack) => {
-    callBack(null, Date.now() + file.originalname);
+    let id = req.body.id || req.params.id;
+    callBack(null, '--' + id + '--' + file.originalname);
   },
 });
+
 const cutsStorage = multer.diskStorage({
   destination: (req, file, callBack) => {
     callBack(null, './src/images/cuts');
   },
   filename: (req, file, callBack) => {
-    console.log('req',req);
-    callBack(null, '--' + req.body.id + '--'+Date.now() +'--'+ file.originalname);
+    console.log('req', req);
+    callBack(null, '--' + req.body.id + '--' + Date.now() + '--' + file.originalname);
   },
 });
 
@@ -29,7 +28,6 @@ const videoStorage = multer.diskStorage({
     callBack(null, Date.now() + file.originalname);
   },
 });
-
 
 const productStorage = multer.diskStorage({
   destination: (req, file, callBack) => {
