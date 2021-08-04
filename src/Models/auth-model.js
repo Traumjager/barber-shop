@@ -43,9 +43,9 @@ class Interface {
         profile_pic = `/images/profilePics/female.jpg`;
       }
 
-      const { email, password, age, gender, city, address, phone_num, working_hours, holidays, shop_name, shop_gender } = req.body;
-      const sql = `INSERT INTO barber (user_name,email,password,age,gender,city,address,profile_pic,phone_num,working_hours,holidays,shop_name,shop_gender,state) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *;`;
-      const saveValues = [user_name, email, password, age, gender, city, address, profile_pic, phone_num, working_hours, holidays, shop_name, shop_gender, state];
+      const { email, password, age, gender, city, address, phone_num, working_hours, holidays, shop_name, shop_gender, verification } = req.body;
+      const sql = `INSERT INTO barber (user_name,email,password,age,gender,city,address,profile_pic,phone_num,working_hours,holidays,shop_name,shop_gender,state,verification_token) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *;`;
+      const saveValues = [user_name, email, password, age, gender, city, address, profile_pic, phone_num, working_hours, holidays, shop_name, shop_gender, state,verification];
       const barber = pool.query(sql, saveValues);
       return barber;
     }
@@ -60,15 +60,24 @@ class Interface {
         profile_pic = `/images/profilePics/female.jpg`;
       }
       const user_name = `${req.body.firstName} ${req.body.lastName}`;
-      const { email, password, age, gender, city, phone_num } = req.body;
-      const sql = 'INSERT INTO client (user_name,email,password,age,gender,city,profile_pic,phone_num) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;';
-      const saveValues = [user_name, email, password, age, gender, city, profile_pic, phone_num];
+      const { email, password, age, gender, city, phone_num, verification } = req.body;
+      const sql = 'INSERT INTO client (user_name,email,password,age,gender,city,profile_pic,phone_num,verification_token) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *;';
+      const saveValues = [user_name, email, password, age, gender, city, profile_pic, phone_num, verification];
       const client = pool.query(sql, saveValues);
       return client;
     }
     throw new Error('role is missing');
   }
-
+  async isVerified(email, verificationToken) {
+    const queryString = `select * from ${this.table} where verification_token=$1 and email=$2`;
+    const queryParams = [verificationToken, email];
+    return pool.query(queryString, queryParams);
+  }
+  async updateVerify(email) {
+    const queryString = `UPDATE ${this.table} SET verified=$1 WHERE email=$2 RETURNING *`;
+    const queryParams = [true, email];
+    return pool.query(queryString, queryParams);
+  }
   async update(id, req) {
     const data = req.body;
     let sql, saveValues;
@@ -119,6 +128,7 @@ class Barber {
     this.working_hours = data.working_hours;
     this.holidays = data.holidays;
     this.state = data.state;
+    this.verification = data.verification;
   }
 }
 
@@ -131,6 +141,7 @@ class Client {
     this.age = data.age;
     this.phone_num = data.phone_num;
     this.profile_pic = data.profile_pic;
+    this.verification = data.verification;
   }
 }
 
