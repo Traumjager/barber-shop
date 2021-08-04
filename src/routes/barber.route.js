@@ -22,30 +22,14 @@ Router.post('/media/videos', uploadvideo.array('videos', 5), addVideos);
 Router.delete('/media/photos', deletePhotos);
 Router.delete('/media/videos', deleteVideos);
 Router.get('/services/:serviceID/:barberID', getServices);
-// get services route examples URLs :
-//get one service
-// http://localhost:3003/barber/services/8/0
-// get all services for one barber
-// http://localhost:3003/barber/services/0/4
-// get all services for all barbers
-// http://localhost:3003/barber/services/0/0
-
 Router.post('/services', createServices);
 Router.put('/services/:serviceID', editServices);
-// put services route examples URLs :
-// http://localhost:3003/barber/services/9
 Router.delete('/services/:serviceID/:barberID', deleteServices);
-// delete services route examples URLs :
-// http://localhost:3003/barber/products/8/0
-// http://localhost:3003/barber/products/0/4
 Router.get(`/products`, getProduct);
 // uploadProduct.array('products', 5),
 Router.post('/products', createProduct);
 Router.put('/products/:productID', editProduct);
 Router.delete('/products/:productID/:barberID', deleteProduct);
-//delete products route examples URLs :
-// http://localhost:3003/barber/products/8/0
-// http://localhost:3003/barber/products/0/4
 Router.get('/queue', getRequestTicket);
 Router.post('/queue', addToQueue);
 Router.delete('/queue', removeTheRequest);
@@ -55,6 +39,5 @@ Router.delete('/queue/delete/:queueID/:barberID/:clientID', deleteQueue);
 
 Router.get('/requests/:barberID/:clientID', getRequestTicket);
 Router.delete('/requests/:id', removeTheRequest);
-// http://localhost:3003/barber/requests/0/4
 
 module.exports = Router;

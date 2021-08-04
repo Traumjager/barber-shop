@@ -58,6 +58,14 @@ class Interface {
 
     return response;
   }
+  async deletee(req) {
+    const { id } = req;
+    console.log(id);
+    const sql = `DELETE FROM ${this.table} WHERE id=$1 RETURNING *;`;
+    const response = await pool.query(sql, [id]);
+
+    return response;
+  }
 }
 
 module.exports = Interface;
