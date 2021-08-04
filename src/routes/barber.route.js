@@ -15,17 +15,17 @@ Router.get('/user', bearer, getBarbers);
 Router.get('/user/:id', bearer, getBarbers); // need to add multer middleware
 Router.put('/user/:id', uploadProfilepic.single('profile_pic'), bearer, updateBarber);
 Router.delete('/user', basic, deleteBerber);
-Router.get('/subs', getSubscribers);
+Router.get('/subs/:id', getSubscribers);
 Router.get('/media', getAllMedia);
 Router.post('/media/photos', uploadcuts.array('cuts', 5), addPhotos);
 Router.post('/media/videos', uploadvideo.array('videos', 5), addVideos);
-Router.delete('/media/photos', deletePhotos);
-Router.delete('/media/videos', deleteVideos);
+Router.delete('/media/photos/:id', deletePhotos);
+Router.delete('/media/videos/:id', deleteVideos);
 Router.get('/services/:serviceID/:barberID', getServices);
 Router.post('/services', createServices);
 Router.put('/services/:serviceID', editServices);
 Router.delete('/services/:serviceID/:barberID', deleteServices);
-Router.get(`/products`, getProduct);
+Router.get(`/products/:productID/:barberID`, getProduct);
 // uploadProduct.array('products', 5),
 Router.post('/products', createProduct);
 Router.put('/products/:productID', editProduct);
@@ -37,7 +37,7 @@ Router.post('/queue/manual', addToQueueManual);
 Router.get('/queue/get', getQueue);
 Router.delete('/queue/delete/:queueID/:barberID/:clientID', deleteQueue);
 
-Router.get('/requests/:barberID/:clientID', getRequestTicket);
+Router.get('/requests/:barberID', getRequestTicket);
 Router.delete('/requests/:id', removeTheRequest);
 
 module.exports = Router;

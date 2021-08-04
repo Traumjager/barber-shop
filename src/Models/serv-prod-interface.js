@@ -52,20 +52,38 @@ class Interface {
   }
 
   update(service_prod_id, service_prod_DataUpdated) {
-    const sql = `UPDATE ${this.table} SET service_name=$1,description=$2,price=$3,discount=$4,end_date=$5,estimated_time=$6 WHERE id=$7 RETURNING *;`;
 
-    const safeValues = [
-      // serviceName, serviceDescrp, servicePrice, estimatedTime, discount, endDate
-      service_prod_DataUpdated.serviceName,
-      service_prod_DataUpdated.serviceDescrp,
-      service_prod_DataUpdated.servicePrice,
-      service_prod_DataUpdated.discount,
-      service_prod_DataUpdated.endDate,
-      service_prod_DataUpdated.estimatedTime,
-      service_prod_id,
-    ];
+    if(this.table === 'services'){
+      const sql = `UPDATE ${this.table} SET service_name=$1,description=$2,price=$3,discount=$4,end_date=$5,estimated_time=$6 WHERE id=$7 RETURNING *;`;
 
-    return pool.query(sql, safeValues);
+      const safeValues = [
+        // serviceName, serviceDescrp, servicePrice, estimatedTime, discount, endDate
+        service_prod_DataUpdated.serviceName,
+        service_prod_DataUpdated.serviceDescrp,
+        service_prod_DataUpdated.servicePrice,
+        service_prod_DataUpdated.discount,
+        service_prod_DataUpdated.endDate,
+        service_prod_DataUpdated.estimatedTime,
+        service_prod_id,
+      ];
+    
+      return pool.query(sql, safeValues);
+    }else{
+      const sql = `UPDATE ${this.table} SET product_name=$1,description=$2,price=$3,discount=$4,end_date=$5,product_image=$6 WHERE id=$7 RETURNING *;`;
+
+      const safeValues = [
+        service_prod_DataUpdated.productName,
+        service_prod_DataUpdated.productDescrp,
+        service_prod_DataUpdated.productPrice,
+        service_prod_DataUpdated.discount,
+        service_prod_DataUpdated.endDate,
+        service_prod_DataUpdated.product_Img,
+        service_prod_id,
+      ];
+      // console.log(pool.query(sql, safeValues));
+      return pool.query(sql, safeValues);
+    }
+
   }
 
   delete(service_prod_id, barber_id) {

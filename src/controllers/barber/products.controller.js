@@ -26,7 +26,7 @@ const getProduct = async (req, res, next) => {
   try {
     let productResponse;
     // const { barberID } = req.body;
-    const { barberID } = req.params;
+    const { barberID } = req.body;
     const { productID } = req.params;
     if (productID != '0') {
       //get one product for one barber
