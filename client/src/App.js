@@ -1,29 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
 import Services from '../src/components-abuosbeh/services';
+import Client from '../src/components-abuosbeh/client';
+import Barber from '../src/components-abuosbeh/barber';
+import io from 'socket.io-client';
+import React, { Component } from 'react';
+// let socket;
 
-function App() {
-  return (
-    <>
-      <Services></Services>
-      {/* <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className='App-link'
-            href='https://reactjs.org'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Learn React
-          </a>
-        </header>
-      </div> */}
-    </>
-  );
+const socket = io(`localhost:${process.env.REACT_APP_PORT}/`, {
+  transports: ['websocket'],
+});
+class App extends Component {
+  componentDidMount() {
+    socket.on('connect', () => {
+      console.log('connected from front end');
+    });
+  }
+  render() {
+    return (
+      <>
+        <Client socket={socket}></Client>
+        <Barber socket={socket}></Barber>
+      </>
+    );
+  }
 }
 
 export default App;

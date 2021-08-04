@@ -20,9 +20,9 @@ const addToQueue = async (req, res, next) => {
   const queue = new Interface('queue');
 
   const addedQueue = await queue.create(req.body);
-  const deletedTicket = await ticket.delete(req.body.ticketID);
+  const deletedTicket = await ticket.deletee(req.body);
 
-  res.json(addedQueue, deletedTicket);
+  res.json({ addedQueue, deletedTicket });
 };
 const addToQueueManual = async (req, res, next) => {
   const data = await ticket.create(req.body);
