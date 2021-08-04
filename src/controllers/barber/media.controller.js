@@ -32,14 +32,14 @@ const addVideos = async (req, res, next) => {
 
 const deletePhotos = async (req, res, next) => {
   try {
-    await media.delete(req);
+    
     const path = `${process.cwd()}/src${req.body.path}`;
-    fs.unlink(path, function (err) {
-      if (err) return console.log(err);
-      console.log('file deleted successfully');
+    fs.unlink(path, async err => {
+      if (err) return  res.json('this image is already deleted');
+      await media.delete(req.params);
+      res.json('image deleted');
     });
 
-    res.json('the image been deleted');
   } catch (error) {
     res.json(error);
   }
@@ -47,14 +47,14 @@ const deletePhotos = async (req, res, next) => {
 
 const deleteVideos = async (req, res, next) => {
   try {
-    await media.delete(req);
-    const path = `${process.cwd()}/src${req.body.videoPath}`;
-    fs.unlink(path, function (err) {
-      if (err) return console.log(err);
-      console.log('file deleted successfully');
+    
+    const path = `${process.cwd()}/src${req.body.path}`;
+    fs.unlink(path, async err => {
+      if (err) return  res.json('this video is already deleted');
+      await media.delete(req.params);
+      res.json('video deleted');
     });
 
-    res.json('the video has been deleted');
   } catch (error) {
     res.json(error);
   }

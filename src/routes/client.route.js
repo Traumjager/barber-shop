@@ -20,6 +20,7 @@ Router.put('/tickets', updateTicket);
 Router.get('/reviews/:barberId', getReviews);
 Router.post('/reviews', postReview);
 Router.delete('/reviews/:reviewId', deleteReview);
+
 Router.post('/subs', addBarber);
 Router.delete('/subs', removeBarber);
 

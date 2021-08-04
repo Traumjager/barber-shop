@@ -15,8 +15,8 @@ const cutsStorage = multer.diskStorage({
     callBack(null, './src/images/cuts');
   },
   filename: (req, file, callBack) => {
-    console.log('req', req);
-    callBack(null, '--' + req.body.id + '--' + Date.now() + '--' + file.originalname);
+    
+    callBack(null, '--' + Date.now() + '--' + file.originalname);
   },
 });
 

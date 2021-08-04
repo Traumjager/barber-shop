@@ -44,9 +44,10 @@ class Interface {
     }
   }
 
-  async delete(req) {
+  async delete(params) {
+    const {id} = params;
     const sql = `DELETE FROM ${this.table} WHERE id=$1 RETURNING *;`;
-    await pool.query(sql, [req.body.id]);
+    await pool.query(sql, [id]);
   }
 }
 
