@@ -53,6 +53,8 @@ const editServices = async (req, res, next) => {
   try {
     const { serviceID } = req.params;
 
+    
+
     const { serviceName, serviceDescrp, servicePrice, estimatedTime, discount, endDate } = req.body;
     let serviceDataUpdated = {
       serviceName,
@@ -62,6 +64,7 @@ const editServices = async (req, res, next) => {
       discount,
       endDate,
     };
+
     let serviceResponse = await interfaceSql.update(serviceID, serviceDataUpdated);
     res.send(serviceResponse);
   } catch (error) {
