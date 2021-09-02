@@ -17,7 +17,9 @@ class Interface {
       return pool.query(`SELECT * FROM ${this.table} WHERE barber_id =$1;`, [barber_id]);
     } else {
       //get all services for all barbers
-      return pool.query(`SELECT * FROM ${this.table};`);
+      // select barber.user_name,barber.profile_pic,${this.table}.* from barber inner join ${this.table} where ${this.table}.barber_id=barber.id
+      console.log("ramahi");
+      return pool.query(`SELECT barber.user_name,barber.profile_pic,${this.table}.* FROM barber INNER JOIN ${this.table} ON ${this.table}.barber_id=barber.id`);
     }
   }
 

@@ -26,7 +26,7 @@ const getProduct = async (req, res, next) => {
   try {
     let productResponse;
     // const { barberID } = req.body;
-    const { barberID } = req.body;
+    const { barberID } = req.params;
     const { productID } = req.params;
     if (productID != '0') {
       //get one product for one barber
@@ -36,6 +36,7 @@ const getProduct = async (req, res, next) => {
       productResponse = await interfaceSql.read(false, barberID);
     } else {
       //get all products for all barbers
+      console.log("else");
       productResponse = await interfaceSql.read(false, false);
     }
     res.send(productResponse);
