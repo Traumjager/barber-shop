@@ -27,7 +27,7 @@ Router.put('/services/:serviceID', editServices);
 Router.delete('/services/:serviceID/:barberID', deleteServices);
 Router.get(`/products/:productID/:barberID`, getProduct);
 // uploadProduct.array('products', 5),
-Router.post('/products', createProduct);
+Router.post('/products', uploadProduct.single('productImg'), createProduct);
 Router.put('/products/:productID', editProduct);
 Router.delete('/products/:productID/:barberID', deleteProduct);
 Router.get('/queue', getRequestTicket);

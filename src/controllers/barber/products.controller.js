@@ -4,6 +4,10 @@ const interfaceSql = new Interface('products');
 const createProduct = async (req, res, next) => {
   // create a Product, description and price
   try {
+    console.log(req.file);
+
+    const path = req.file.path.substring(3);
+
     const { barberID, productName, productDescrp, productPrice, discount, endDate, productImg } = req.body;
     let productData = {
       barberID,
@@ -12,7 +16,7 @@ const createProduct = async (req, res, next) => {
       productPrice,
       discount,
       endDate,
-      productImg,
+      productImg: path,
     };
     let productResponse = await interfaceSql.create(productData);
     res.send(productResponse);
@@ -36,7 +40,7 @@ const getProduct = async (req, res, next) => {
       productResponse = await interfaceSql.read(false, barberID);
     } else {
       //get all products for all barbers
-      console.log("else");
+      // console.log("else");
       productResponse = await interfaceSql.read(false, false);
     }
     res.send(productResponse);

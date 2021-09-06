@@ -18,7 +18,7 @@ class Interface {
     } else {
       //get all services for all barbers
       // select barber.user_name,barber.profile_pic,${this.table}.* from barber inner join ${this.table} where ${this.table}.barber_id=barber.id
-      console.log("ramahi");
+      // console.log("ramahi");
       return pool.query(`SELECT barber.user_name,barber.profile_pic,${this.table}.* FROM barber INNER JOIN ${this.table} ON ${this.table}.barber_id=barber.id`);
     }
   }
@@ -49,13 +49,13 @@ class Interface {
         service_prod_Data.endDate,
         service_prod_Data.productImg,
       ];
+      console.log('service_prod_Data.productImg', service_prod_Data.productImg);
       return pool.query(sql, safeValues);
     }
   }
 
   update(service_prod_id, service_prod_DataUpdated) {
-
-    if(this.table === 'services'){
+    if (this.table === 'services') {
       const sql = `UPDATE ${this.table} SET service_name=$1,description=$2,price=$3,discount=$4,end_date=$5,estimated_time=$6 WHERE id=$7 RETURNING *;`;
 
       const safeValues = [
@@ -68,9 +68,9 @@ class Interface {
         service_prod_DataUpdated.estimatedTime,
         service_prod_id,
       ];
-    
+
       return pool.query(sql, safeValues);
-    }else{
+    } else {
       const sql = `UPDATE ${this.table} SET product_name=$1,description=$2,price=$3,discount=$4,end_date=$5,product_image=$6 WHERE id=$7 RETURNING *;`;
 
       const safeValues = [
@@ -85,7 +85,6 @@ class Interface {
       // console.log(pool.query(sql, safeValues));
       return pool.query(sql, safeValues);
     }
-
   }
 
   delete(service_prod_id, barber_id) {
