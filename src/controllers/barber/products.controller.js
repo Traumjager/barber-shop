@@ -4,7 +4,8 @@ const interfaceSql = new Interface('products');
 const createProduct = async (req, res, next) => {
   // create a Product, description and price
   try {
-    console.log(req.file);
+    console.log('req.body', req.body);
+    console.log('req.file', req.file);
 
     const path = req.file.path.substring(3);
 
@@ -43,25 +44,30 @@ const getProduct = async (req, res, next) => {
       // console.log("else");
       productResponse = await interfaceSql.read(false, false);
     }
-    res.send(productResponse);
+    res.send(productResponse.rows);
   } catch (error) {
     res.json(error);
   }
 };
 
 const editProduct = async (req, res, next) => {
+  const path = req.file.path.substring(3);
+
   // update a product
   try {
     const { productID } = req.params;
 
-    const { productName, productDescrp, productPrice, discount, endDate } = req.body;
+    const { productName, productDescrp, productPrice, discount, endDate, productImg } = req.body;
     let productDataUpdated = {
       productName,
       productDescrp,
       productPrice,
       discount,
       endDate,
+      productImg: path,
     };
+
+    console.log('productDataUpdated', productDataUpdated);
     let productResponse = await interfaceSql.update(productID, productDataUpdated);
     res.send(productResponse);
   } catch (error) {

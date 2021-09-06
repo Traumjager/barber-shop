@@ -79,7 +79,7 @@ class Interface {
         service_prod_DataUpdated.productPrice,
         service_prod_DataUpdated.discount,
         service_prod_DataUpdated.endDate,
-        service_prod_DataUpdated.product_Img,
+        service_prod_DataUpdated.productImg,
         service_prod_id,
       ];
       // console.log(pool.query(sql, safeValues));
