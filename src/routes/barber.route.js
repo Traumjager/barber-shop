@@ -15,7 +15,7 @@ Router.get('/user', bearer, getBarbers);
 Router.get('/user/:id', bearer, getBarbers); // need to add multer middleware
 Router.put('/user/:id', uploadProfilepic.single('profile_pic'), bearer, updateBarber);
 Router.delete('/user', basic, deleteBerber);
-Router.get('/subs/:id', getSubscribers);
+Router.get('/subs/:barberid/:clientid', getSubscribers);
 Router.get('/media', getAllMedia);
 Router.post('/media/photos', uploadcuts.array('cuts', 5), addPhotos);
 Router.post('/media/videos', uploadvideo.array('videos', 5), addVideos);

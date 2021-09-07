@@ -26,7 +26,7 @@ class Interface {
   create(service_prod_Data) {
     if (this.table == 'services') {
       const sql = `INSERT INTO ${this.table} (barber_id,service_name,description,price,discount,end_date,estimated_time) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *;`;
-
+      
       const safeValues = [
         service_prod_Data.barberID,
         service_prod_Data.serviceName,
@@ -39,7 +39,7 @@ class Interface {
       return pool.query(sql, safeValues);
     } else {
       const sql = `INSERT INTO ${this.table} (barber_id,product_name,description,price,discount,end_date,product_image) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *;`;
-
+       console.log("product added");
       const safeValues = [
         service_prod_Data.barberID,
         service_prod_Data.productName,

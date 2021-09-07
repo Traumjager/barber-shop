@@ -6,7 +6,7 @@ class Interface {
     return pool.query(queryString, queryParams);
   }
   read(barberId) {
-    const queryString = 'SELECT * FROM reviews WHERE barber_id=$1';
+    const queryString = 'SELECT reviews.*,client.user_name,client.profile_pic,client.city FROM reviews INNER JOIN client on client.id=reviews.client_id WHERE barber_id=$1';
     const queryParams = [barberId];
     return pool.query(queryString, queryParams);
   }
