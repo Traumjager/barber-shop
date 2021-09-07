@@ -22,6 +22,6 @@ Router.post('/reviews', postReview);
 Router.delete('/reviews/:reviewId', deleteReview);
 
 Router.post('/subs', addBarber);
-Router.delete('/subs', removeBarber);
+Router.delete('/subs/:barberId/:clientId', removeBarber);
 
 module.exports = Router;

@@ -11,7 +11,7 @@ const addBarber = async (req, res, next) => {
 
 const removeBarber = async (req, res, next) => {
   // remove subscription from a barber
-  const { barberId, clientId } = req.body;
+  const { barberId, clientId } = req.params;
   const deleteSubscription = await interFace.delete(barberId, clientId);
   res.json(deleteSubscription.rows[0]);
 };
