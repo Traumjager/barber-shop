@@ -11,8 +11,8 @@ const basic = require('../middleware/basic-auth');
 const { uploadcuts, uploadvideo, uploadProfilepic, uploadProduct } = require('../middleware/multer');
 const { getQueue, deleteQueue } = require('../controllers/barber/queue.controller');
 
-Router.get('/user', bearer, getBarbers);
-Router.get('/user/:id', bearer, getBarbers); // need to add multer middleware
+Router.get('/user', getBarbers);
+Router.get('/user/:id', getBarbers); // need to add multer middleware
 Router.put('/user/:id', uploadProfilepic.single('profile_pic'), bearer, updateBarber);
 Router.delete('/user', basic, deleteBerber);
 Router.get('/subs/:barberid/:clientid', getSubscribers);

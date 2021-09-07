@@ -12,12 +12,12 @@ class Interface {
   }
 
   async get(id) {
+    let results;
     if (id) {
       const data = await pool.query(`SELECT * FROM ${this.table} WHERE id=$1`, [id]);
       if (this.table === 'barber') return new Barber(data.rows[0]);
       if (this.table === 'client') return new Client(data.rows[0]);
     } else {
-      let results;
       const data = await pool.query(`SELECT * FROM ${this.table}`);
       if (this.table === 'barber') {
         results = data.rows.map((user) => new Barber(user));
@@ -45,7 +45,7 @@ class Interface {
 
       const { email, password, age, gender, city, address, phone_num, working_hours, holidays, shop_name, shop_gender, verification } = req.body;
       const sql = `INSERT INTO barber (user_name,email,password,age,gender,city,address,profile_pic,phone_num,working_hours,holidays,shop_name,shop_gender,state,verification_token) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *;`;
-      const saveValues = [user_name, email, password, age, gender, city, address, profile_pic, phone_num, working_hours, holidays, shop_name, shop_gender, state,verification];
+      const saveValues = [user_name, email, password, age, gender, city, address, profile_pic, phone_num, working_hours, holidays, shop_name, shop_gender, state, verification];
       const barber = pool.query(sql, saveValues);
       return barber;
     }
