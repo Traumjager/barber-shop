@@ -33,10 +33,11 @@ class Interface {
     if (this.table === 'barber') {
       const user_name = `${req.body.firstName} ${req.body.lastName}`;
       const state = 'open';
-
+   
+      console.log('file',req.file);
       let profile_pic;
       if (req.file) {
-        profile_pic = `/images/profilePics/${req.file.profile_pic}`;
+        profile_pic = `/images/profilePics/${req.file.filename}`;
       } else if (req.body.gender === 'male') {
         profile_pic = `/images/profilePics/male.jpg`;
       } else {
@@ -53,7 +54,7 @@ class Interface {
     if (this.table === 'client') {
       let profile_pic;
       if (req.file) {
-        profile_pic = `/images/profilePics/${req.file.profile_pic}`;
+        profile_pic = `/images/profilePics/${req.file.filename}`;
       } else if (req.body.gender === 'male') {
         profile_pic = `/images/profilePics/male.jpg`;
       } else {
