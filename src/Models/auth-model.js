@@ -95,14 +95,14 @@ class Interface {
 
     if (this.table === 'client') {
       let profile_pic;
-      sql = `UPDATE client SET user_name=$1,age=$2,gender=$3,city=$4,profile_pic=$5,phone_num=$6 WHERE id=$7 RETURNING *;`;
+      sql = `UPDATE client SET user_name=$1,password=$2,gender=$3,city=$4,profile_pic=$5,phone_num=$6 WHERE id=$7 RETURNING *;`;
       if (req.file) {
         profile_pic = `/images/profilePics/${req.file.filename}`;
       } else {
         const oldPic = await pool.query(`SELECT * FROM ${this.table} WHERE user_name=$1`, [data.user_name]);
         profile_pic = `/images/profilePics/${oldPic.rows[0].profile_pic}`;
       }
-      saveValues = [data.user_name, data.age, data.gender, data.city, profile_pic, data.phone_num, id];
+      saveValues = [data.user_name, data.password, data.gender, data.city, profile_pic, data.phone_num, id];
     }
     const result = await pool.query(sql, saveValues);
     return result.rows[0];
@@ -116,9 +116,10 @@ class Interface {
 class Barber {
   constructor(data) {
     this.id = data.id;
-    this.name = data.user_name;
+    this.user_name = data.user_name;
     this.city = data.city;
     this.address = data.address;
+    this.email=data.email;
     this.gender = data.gender;
     this.age = data.age;
     this.shop_gender = data.shop_gender;
@@ -135,7 +136,8 @@ class Barber {
 class Client {
   constructor(data) {
     this.id = data.id;
-    this.name = data.user_name;
+    this.user_name = data.user_name;
+    this.email = data.email;
     this.city = data.city;
     this.gender = data.gender;
     this.age = data.age;

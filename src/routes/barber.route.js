@@ -13,7 +13,7 @@ const { getQueue, deleteQueue } = require('../controllers/barber/queue.controlle
 
 Router.get('/user', getBarbers);
 Router.get('/user/:id', getBarbers); // need to add multer middleware
-Router.put('/user/:id', uploadProfilepic.single('profile_pic'), bearer, updateBarber);
+Router.put('/user/:id', uploadProfilepic.single('profile_pic'), updateBarber);
 Router.delete('/user', basic, deleteBerber);
 Router.get('/subs/:barberid/:clientid', getSubscribers);
 Router.get('/media', getAllMedia);

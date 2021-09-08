@@ -9,10 +9,10 @@ const uploadProfilePic = require('../middleware/multer').uploadProfilepic;
 const basic = require('../middleware/basic-auth');
 
 //
-Router.get('/user', bearer, getClients);
-Router.get('/user/:id', bearer, getClients);
-Router.put('/user/:id', bearer, uploadProfilePic.single('profile_pic'), updateClients);
-Router.delete('/user', basic, deleteClient);
+Router.get('/user', getClients);
+Router.get('/user/:id', getClients);
+Router.put('/user/:id', uploadProfilePic.single('profile_pic'), updateClients);
+Router.delete('/user', deleteClient);
 //
 Router.post('/tickets', createTicket);
 Router.delete('/tickets/:id', deleteTicket);
