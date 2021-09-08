@@ -1,12 +1,13 @@
 const multer = require('multer');
-
+const randomNumber = Math.floor(Math.random() * 1000) + 1;
 const profileStorage = multer.diskStorage({
   destination: (req, file, callBack) => {
     callBack(null, './src/images/profilePics');
   },
   filename: (req, file, callBack) => {
     let id = req.body.id || req.params.id;
-    callBack(null, '--' + id + '--' + file.originalname);
+    id?id:id=randomNumber;
+    callBack(null, '--' + id + '--' +file.originalname);
   },
 });
 

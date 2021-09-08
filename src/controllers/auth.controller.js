@@ -23,15 +23,13 @@ const signUp = async (req, res, next) => {
     req.body.password = pass;
     const role = req.body.role;
     const user = new Interface(`${role}`);
-
     const checkUser = await user.read(req.body.email);
     
     let verificationToken = uuidv4().split('-')[0];
     req.body.verification = verificationToken;
     mailer.send(req.body.email, req.body.verification);
-
     if (checkUser.rows[0]) return next(`This email is already a ${role} registered account`);
-
+    
     const account = await user.create(req);
     console.log(account);
     res.status(201).json(account.rows[0]);
