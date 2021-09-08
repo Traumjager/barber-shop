@@ -6,7 +6,6 @@ class Interface {
   }
 
   async read(barberID) {
-    
     if (barberID) {
       const sql = `SELECT tickets.id,tickets.time, client.user_name, client.phone_num,services.service_name, services.price, services.estimated_time
       FROM tickets
@@ -15,11 +14,10 @@ class Interface {
       const data = await pool.query(sql, [barberID]);
       return data;
     }
-    
   }
   create(req) {
     const { barbarId, serviseId, clientId, time } = req;
-
+    console.log('req ticket', req);
     try {
       const sql = `INSERT INTO ${this.table} (barber_id,client_id,service_id,time) VALUES ($1,$2,$3,$4) RETURNING *;`;
 
