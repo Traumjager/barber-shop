@@ -117,7 +117,7 @@ CREATE TABLE queue (
     barber_id int NOT NULL,
     client_id int NOT NULL,
     service_id int NOT NULL,
-    time TIMESTAMP,
+    time varchar(255),
     -- '2004-10-19 10:23:54'
      CONSTRAINT fk_barber
       FOREIGN KEY(barber_id)

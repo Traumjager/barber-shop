@@ -7,10 +7,13 @@ class Interface {
 
   async read(barberID) {
     if (barberID) {
-      const sql = `SELECT tickets.id,tickets.time, client.user_name, client.phone_num,services.service_name, services.price, services.estimated_time
-      FROM tickets
-      INNER JOIN client ON client.id=tickets.client_id 
-      INNER JOIN services ON services.id=tickets.service_id WHERE tickets.barber_id =$1;`;
+      const sql = `SELECT barber.working_hours ,queue.barber_id, queue.time, client.profile_pic, client.user_name, client.phone_num,services.service_name, services.price, services.estimated_time,services.id as service_id,client.id as client_id
+      FROM queue
+      INNER JOIN client ON client.id=queue.client_id 
+      INNER JOIN services ON services.id=queue.service_id 
+      INNER JOIN barber ON barber.id=queue.barber_id 
+      
+      WHERE queue.barber_id =$1;`;
       const data = await pool.query(sql, [barberID]);
       return data;
     }
